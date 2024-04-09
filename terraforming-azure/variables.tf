@@ -2,19 +2,19 @@
 Subscription Variables, should be set from env or vault
 */
 variable "subscription_id" {
-default = none
+default = null
 }
 variable "tenant_id" {
-default = none
+default = null
 }
 variable "client_id" {
-default = none
+default = null
 }
 variable "client_secret" {
-default = none
+default = null
 }
 variable "location" {
-default = none
+default = null
 }
 
 /*

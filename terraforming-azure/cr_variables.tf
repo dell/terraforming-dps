@@ -5,6 +5,7 @@ variable "create_crs_s2s_vpn" {
 }
 variable "crs_wan_ip" {
   description = "The IP of your VPN Device if S2S VPN"
+default = null
 }
 
 variable "crs_network_rg_name" {

@@ -1,11 +1,21 @@
 /*
 Subscription Variables, should be set from env or vault
 */
-variable "subscription_id" {}
-variable "tenant_id" {}
-variable "client_id" {}
-variable "client_secret" {}
-variable "location" {}
+variable "subscription_id" {
+default = none
+}
+variable "tenant_id" {
+default = none
+}
+variable "client_id" {
+default = none
+}
+variable "client_secret" {
+default = none
+}
+variable "location" {
+default = none
+}
 
 /*
 Network Module Variables, if not derived from environment/tfvars

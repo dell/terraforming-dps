@@ -8,6 +8,11 @@ See Subdirectories for Cloud Provider specific Deployments and getting started
 [terraforming-azure](./terraforming-azure/README.md)  
 [terraforming-gcp](./terraforming-gcp/README.md)
 
+## How to use
+Cloud Provider comes with modules for individual Consumption. each Module has its own variable anf output file. 
+You can use your own main file to connect to the modules, or use the Provided one, that allows you to dynamically select the modules to use.
+
+The Modules support "Bring your own Infra", aka pre configured resources ( e.g. Networking or Pricipals )
 
 ## Contributing Guidelines
 Contributions to this Repository are welcome, whether or not you work for Dell. Contributions may be:

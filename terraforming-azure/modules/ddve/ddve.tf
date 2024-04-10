@@ -95,18 +95,13 @@ data "azurerm_resource_group" "ddve_networks_resource_group" {
 data "azurerm_resource_group" "ddve_resource_group" {
   name = var.ddve_resource_group_name
 }
-#resource "azurerm_user_assigned_identity" "storage" {
-#  resource_group_name = azurerm_resource_group.resource_group.name
-#  location            = azurerm_resource_group.resource_group.location
-#  name = "storage_user_identity"
-#}
 
 
-#resource "azurerm_role_assignment" "diagstore" {
-#  scope                = azurerm_storage_account.ddve_diag_storage_account.id
-#  role_definition_name = "Storage Blob Data Owner"
-#  principal_id         = azurerm_user_assigned_identity.storage.principal_id
-#}
+data "http" "myip" {
+  url = "https://ipv4.icanhazip.com"
+}
+
+
 
 resource "azurerm_role_assignment" "objectstore" {
   scope                = azurerm_storage_account.ddve_atos.id
@@ -139,7 +134,7 @@ resource "azurerm_storage_account" "ddve_diag_storage_account" {
   enable_https_traffic_only = true
   network_rules {
     default_action             = "Deny"
-    ip_rules                   = ["127.0.0.1"]
+    ip_rules = [chomp(data.http.myip.body)]
     virtual_network_subnet_ids = [var.subnet_id]
   }
   tags = {
@@ -158,7 +153,7 @@ resource "azurerm_storage_account" "ddve_atos" {
   enable_https_traffic_only = true
   network_rules {
     default_action             = "Deny"
-    ip_rules                   = ["127.0.0.1"]
+    ip_rules = [chomp(data.http.myip.body)]
     virtual_network_subnet_ids = [var.subnet_id]
   }
   tags = {

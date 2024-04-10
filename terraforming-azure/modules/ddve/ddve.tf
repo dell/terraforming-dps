@@ -59,7 +59,7 @@ locals {
       version   = "7.7.5020"
     }
 
-# Branded Image SKU´s
+    # Branded Image SKU´s
 
     "7.13.020" = {
       publisher = "dellemc"
@@ -89,7 +89,10 @@ locals {
   ddve_name = "ddve${var.ddve_instance}"
 
 }
-data "azurerm_resource_group" "resource_group" {
+data "azurerm_resource_group" "ddve_networks_resource_group" {
+  name = var.ddve_networks_resource_group_name
+}
+data "azurerm_resource_group" "ddve_resource_group" {
   name = var.ddve_resource_group_name
 }
 #resource "azurerm_user_assigned_identity" "storage" {
@@ -128,8 +131,8 @@ resource "random_string" "fqdn_name" {
 }
 resource "azurerm_storage_account" "ddve_diag_storage_account" {
   name                     = "${var.ddve_instance}diag${random_string.storage_account_name.result}"
-  resource_group_name      = data.azurerm_resource_group.resource_group.name
-  location                 = data.azurerm_resource_group.resource_group.location
+  resource_group_name      = data.azurerm_ddve_resource_group.resource_group.name
+  location                 = data.azurerm_ddve_resource_group.resource_group.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
   tags = {
@@ -140,8 +143,8 @@ resource "azurerm_storage_account" "ddve_diag_storage_account" {
 
 resource "azurerm_storage_account" "ddve_atos" {
   name                     = "${var.ddve_instance}atos${random_string.storage_account_name.result}"
-  resource_group_name      = data.azurerm_resource_group.resource_group.name
-  location                 = data.azurerm_resource_group.resource_group.location
+  resource_group_name      = data.azurerm_ddve_resource_group.resource_group.name
+  location                 = data.azurerm_ddve_resource_group.resource_group.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
   network_rules {
@@ -164,82 +167,22 @@ resource "azurerm_storage_container" "atos" {
 
 
 resource "azurerm_marketplace_agreement" "ddve" {
-  count = var.ddve_instance == 1 ? 1 : 0
+  count     = var.ddve_instance == 1 ? 1 : 0
   publisher = local.ddve_image[var.ddve_version]["publisher"]
   offer     = local.ddve_image[var.ddve_version]["offer"]
   plan      = local.ddve_image[var.ddve_version]["sku"]
 }
 # DNS
 
-resource "azurerm_private_dns_a_record" "ddve_dns" {
-  name                = local.ddve_name
-  zone_name           = var.dns_zone_name
-  resource_group_name = var.resource_group_name
-  ttl                 = "60"
-  records             = [azurerm_network_interface.ddve_nic1.ip_configuration[0].private_ip_address]
-}
 
 ## dynamic NSG
-resource "azurerm_network_security_group" "ddve_security_group" {
-  name                = "${var.environment}-${local.ddve_name}-security-group"
-  location            = data.azurerm_resource_group.resource_group.location
-  resource_group_name = data.azurerm_resource_group.resource_group.name
-  dynamic "security_rule" {
-    for_each = var.ddve_tcp_inbound_rules_Vnet
-    content {
-      name                       = "TCP_inbound_rule_Vnet_${security_rule.key}"
-      priority                   = security_rule.key * 10 + 1000
-      direction                  = "Inbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_port_range          = "*"
-      destination_port_range     = security_rule.value
-      source_address_prefix      = "VirtualNetwork"
-      destination_address_prefix = "*"
-    }
-  }
-  dynamic "security_rule" {
-    for_each = var.ddve_tcp_inbound_rules_Inet
-    content {
-      name                       = "TCP_inbound_rule_Inet_${security_rule.key}"
-      priority                   = security_rule.key * 10 + 1100
-      direction                  = "Inbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_port_range          = "*"
-      destination_port_range     = security_rule.value
-      source_address_prefix      = "Internet"
-      destination_address_prefix = "*"
-    }
-  }
-  security_rule {
-    name                       = "TCP_outbound_rule_1"
-    priority                   = 1010
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "*"
-    source_port_range          = "*"
-    destination_port_range     = 443
-    source_address_prefix      = "Internet"
-    destination_address_prefix = "*"
-  }
-}
 
-
-resource "azurerm_network_interface_security_group_association" "ddve_security_group_nic1" {
-  network_interface_id      = azurerm_network_interface.ddve_nic1.id
-  network_security_group_id = azurerm_network_security_group.ddve_security_group.id
-}
-resource "azurerm_network_interface_security_group_association" "ddve_security_group_nic2" {
-  network_interface_id      = azurerm_network_interface.ddve_nic2.id
-  network_security_group_id = azurerm_network_security_group.ddve_security_group.id
-}
 # VMs
 ## network interface
 resource "azurerm_network_interface" "ddve_nic1" {
   name                = "${var.environment}-${local.ddve_name}-nic1"
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = data.azurerm_ddve_resource_group.ddve_networks_resource_group.location
+  resource_group_name = data.azurerm_ddve_resource_group.ddve_networks_resource_group.name
   ip_configuration {
     primary                       = "true"
     name                          = "${var.environment}-${local.ddve_name}-ip-config"
@@ -250,8 +193,8 @@ resource "azurerm_network_interface" "ddve_nic1" {
 }
 resource "azurerm_network_interface" "ddve_nic2" {
   name                = "${var.environment}-${local.ddve_name}-nic2"
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = data.azurerm_ddve_resource_group.ddve_networks_resource_group.location
+  resource_group_name = data.azurerm_ddve_resource_group.ddve_networks_resource_group.name
   ip_configuration {
     name                          = "${var.environment}-${local.ddve_name}-ip-config1"
     subnet_id                     = var.subnet_id
@@ -268,8 +211,8 @@ resource "azurerm_public_ip" "publicip" {
 }
 resource "azurerm_virtual_machine" "ddve" {
   name                             = "${var.environment}-${local.ddve_name}"
-  location                         = data.azurerm_resource_group.resource_group.location
-  resource_group_name              = data.azurerm_resource_group.resource_group.name
+  location                         = data.azurerm_ddve_resource_group.resource_group.location
+  resource_group_name              = data.azurerm_ddve_resource_group.resource_group.name
   depends_on                       = [azurerm_network_interface.ddve_nic1, azurerm_network_interface.ddve_nic2, azurerm_network_interface_security_group_association.ddve_security_group_nic1, azurerm_network_interface_security_group_association.ddve_security_group_nic2]
   network_interface_ids            = [azurerm_network_interface.ddve_nic1.id, azurerm_network_interface.ddve_nic2.id]
   primary_network_interface_id     = azurerm_network_interface.ddve_nic1.id

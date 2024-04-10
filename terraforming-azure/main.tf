@@ -100,7 +100,12 @@ module "ave" {
 
 }
 
-
+module "common_rg" {
+  source                      = "./modules/rg"
+  count                          = var.create_common_rg ? 1 : 0
+  resource_group_name = var.common_resource_group_name
+  location = var.common_location
+}
 module "ddve" {
   source                      = "./modules/ddve"
   count                       = var.ddve_count > 0 ? var.ddve_count : 0
@@ -117,7 +122,8 @@ module "ddve" {
   subnet_id                   = var.create_networks ? module.networks[0].infrastructure_subnet_id : var.networks_infrastructure_subnet_id
   public_ip                   = var.ddve_public_ip
   wan_ip                      = var.wan_ip
-  ddve_resource_group_name    = var.ddve_resource_group_name == null ? var.environment : var.ddve_resource_group_name
+  ddve_resource_group_name    = var.ddve_resource_group_name == null ? var.resource_group_name : var.environment
+  ddve_networks_resource_group_name = var.create_networks ? module.networks[0].resource_group_name : var.networks_resource_group_name
 }
 
 module "ppdm" {

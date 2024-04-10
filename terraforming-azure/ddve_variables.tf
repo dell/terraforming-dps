@@ -26,6 +26,12 @@ variable "ddve_resource_group_name" {
   default     = null
 }
 
+variable "ddve_networks_resource_group_name" {
+  description = "Bring your own Network resourcegroup. the Code will read the Data from the resourcegroup name specified here"
+  type        = string
+  default     = null
+}
+
 variable "ddve_public_ip" {
   type        = string
   default     = "false"

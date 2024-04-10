@@ -28,7 +28,12 @@ variable "create_networks" {
 
 
 variable "environment" {}
-
+variable "resource_group_name" {}
+variable "create_resource_group" {
+  type    = bool
+  default = false
+  description = "create resource group for non network resources"
+}
 # ubuntu block starts here
 variable "create_linux" {
   type    = bool
@@ -83,6 +88,5 @@ variable "LINUX_VM_SIZE" {
   type    = string
   default = "Standard_DS1_v2"
 }
-
 
 

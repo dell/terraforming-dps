@@ -28,7 +28,9 @@ variable "ddve_resource_group_name" {
 
 }
 
+variable "ddve_networks_resource_group_name" {
 
+}
 variable "resource_group_name" {
 
 }

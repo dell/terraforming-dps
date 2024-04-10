@@ -149,7 +149,6 @@ resource "azurerm_storage_account" "ddve_atos" {
   account_replication_type = "LRS"
   network_rules {
     default_action             = "Deny"
-    ip_rules                   = [var.wan_ip]
     virtual_network_subnet_ids = [var.subnet_id]
   }
   tags = {

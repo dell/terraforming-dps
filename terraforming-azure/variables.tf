@@ -28,12 +28,11 @@ variable "create_networks" {
 
 
 variable "environment" {}
-variable "resource_group_name" {}
-variable "create_resource_group" {
-  type    = bool
-  default = false
-  description = "create resource group for non network resources"
+variable "resource_group_name" {
+  default = null
+  description = "Default name of provided RG"
 }
+
 # ubuntu block starts here
 variable "create_linux" {
   type    = bool

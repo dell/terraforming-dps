@@ -31,16 +31,16 @@ output "ddve_ssh_public_key" {
   sensitive   = true
   description = "The ssh public keys for the DDVE Instances"
 }
-output "ddve_private_fqdn" {
-  sensitive   = false
-  value       = var.ddve_count > 0 ? module.ddve[0].private_fqdn : null
-  description = "the private FQDN of the first DDVE"
-}
-output "DDVE_PRIVATE_FQDN" {
-  sensitive   = false
-  value       = var.ddve_count > 0 ? module.ddve[*].private_fqdn : null
-  description = "the private FQDN of the DDVEs"#
-}
+#output "ddve_private_fqdn" {
+#  sensitive   = false
+#  value       = var.ddve_count > 0 ? module.ddve[0].private_fqdn : null
+#  description = "the private FQDN of the first DDVE"
+#}
+#output "DDVE_PRIVATE_FQDN" {
+#  sensitive   = false
+#  value       = var.ddve_count > 0 ? module.ddve[*].private_fqdn : null
+#  description = "the private FQDN of the DDVEs"#
+#}
 
 #output "ddve_public_fqdn" {
 #  sensitive   = false

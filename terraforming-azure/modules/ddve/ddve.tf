@@ -181,8 +181,8 @@ resource "azurerm_marketplace_agreement" "ddve" {
 ## network interface
 resource "azurerm_network_interface" "ddve_nic1" {
   name                = "${var.environment}-${local.ddve_name}-nic1"
-  location            = data.azurerm_ddve_resource_group.ddve_networks_resource_group.location
-  resource_group_name = data.azurerm_ddve_resource_group.ddve_networks_resource_group.name
+  location            = data.azurerm_resource_group.ddve_networks_resource_group.location
+  resource_group_name = data.azurerm_resource_group.ddve_networks_resource_group.name
   ip_configuration {
     primary                       = "true"
     name                          = "${var.environment}-${local.ddve_name}-ip-config"
@@ -193,8 +193,8 @@ resource "azurerm_network_interface" "ddve_nic1" {
 }
 resource "azurerm_network_interface" "ddve_nic2" {
   name                = "${var.environment}-${local.ddve_name}-nic2"
-  location            = data.azurerm_ddve_resource_group.ddve_networks_resource_group.location
-  resource_group_name = data.azurerm_ddve_resource_group.ddve_networks_resource_group.name
+  location            = data.azurerm_resource_group.ddve_networks_resource_group.location
+  resource_group_name = data.azurerm_resource_group.ddve_networks_resource_group.name
   ip_configuration {
     name                          = "${var.environment}-${local.ddve_name}-ip-config1"
     subnet_id                     = var.subnet_id

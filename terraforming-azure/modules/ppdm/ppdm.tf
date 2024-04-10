@@ -108,8 +108,8 @@ resource "azurerm_public_ip" "publicip" {
 
 resource "azurerm_virtual_machine" "ppdm" {
   name                             = "${var.environment}-${local.ppdm_name}"
-  resource_group_name              = data.azurerm_resource_group.resource_group.name
-  location                         = data.azurerm_resource_group.resource_group.location
+  resource_group_name              = data.azurerm_resource_group.ppdm_resource_group.name
+  location                         = data.azurerm_resource_group.ppdm_resource_group.location
   depends_on                       = [azurerm_network_interface.ppdm_nic]
   network_interface_ids            = [azurerm_network_interface.ppdm_nic.id]
   vm_size                          = local.ppdm_vm_size

@@ -147,6 +147,8 @@ resource "azurerm_storage_account" "ddve_atos" {
   location                 = data.azurerm_resource_group.ddve_resource_group.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+  min_tls_version = "TLS1_2"
+  enable_https_traffic_only = true
   network_rules {
     default_action             = "Deny"
     ip_rules                   = ["127.0.0.1"]

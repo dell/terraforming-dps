@@ -134,7 +134,7 @@ resource "azurerm_storage_account" "ddve_diag_storage_account" {
   enable_https_traffic_only = true
   network_rules {
     default_action             = "Deny"
-    ip_rules = [chomp(data.http.myip.body)]
+    ip_rules = [chomp(data.http.myip.response_body)]
     virtual_network_subnet_ids = [var.subnet_id]
   }
   tags = {
@@ -153,7 +153,7 @@ resource "azurerm_storage_account" "ddve_atos" {
   enable_https_traffic_only = true
   network_rules {
     default_action             = "Deny"
-    ip_rules = [chomp(data.http.myip.body)]
+    ip_rules = [chomp(data.http.myip.response_body)]
     virtual_network_subnet_ids = [var.subnet_id]
   }
   tags = {

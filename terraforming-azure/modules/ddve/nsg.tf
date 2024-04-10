@@ -1,7 +1,7 @@
 resource "azurerm_network_security_group" "ddve_security_group" {
   name                = "${var.environment}-${local.ddve_name}-security-group"
-  location            = data.azurerm_ddve_resource_group.resource_group.location
-  resource_group_name = data.azurerm_ddve_resource_group.resource_group.name
+  location            = data.azurerm_resource_group.ddve_resource_group.location
+  resource_group_name = data.azurerm_resource_group.ddve_resource_group.name
   dynamic "security_rule" {
     for_each = var.ddve_tcp_inbound_rules_Vnet
     content {

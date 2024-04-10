@@ -28,10 +28,10 @@ output "ddve_private_ip_address" {
 output "ddve_public_ip_address" {
   value = length(azurerm_public_ip.publicip) > 0 ? azurerm_public_ip.publicip[0].ip_address : ""
 }
-output "private_fqdn" {
-  sensitive = false
-  value     = trimsuffix(azurerm_private_dns_a_record.ddve_dns.fqdn, ".")
-}
+#output "private_fqdn" {
+#  sensitive = false
+#  value     = trimsuffix(azurerm_private_dns_a_record.ddve_dns.fqdn, ".")
+#}
 output "ppdd_nfs_path" {
   sensitive = true
   value     = var.ddve_ppdd_nfs_path

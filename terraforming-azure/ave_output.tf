@@ -44,7 +44,7 @@ output "AVE_PRIVATE_FQDN" {
 
 output "ave_public_fqdn" {
   sensitive = false
-  value     = var.ave_count > 0  && var.ave_public_ip ? module.ave[*].private_fqdn : module.ave[*].ave_private_ip_address
+  value     = var.ave_count > 0  && var.ave_public_ip ? module.ave[*].private_fqdn : var.ave_count > 0  &&! var.ave_public_ip ? module.ave[*].ave_private_ip_address : null
   description = "the private FQDN of the AVE´s"
 }
 output "AVE_PUBLIC_FQDN" {

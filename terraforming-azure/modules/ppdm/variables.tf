@@ -1,4 +1,4 @@
-# ==================== Variables
+
 variable "ppdm_instance" {}
 variable "ppdm_name" {
   default = "ppdm"
@@ -18,7 +18,7 @@ variable "ppdm_resource_group_name" {
 }
 
 
-variable "resource_group_name" {
+variable "ppdm_networks_resource_group_name" {
   default = ""
 }
 

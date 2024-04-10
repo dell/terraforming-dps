@@ -8,7 +8,7 @@ terraform {
       source  = "hashicorp/tls"
       version = "~> 3.1"
     }
-        http = {
+    http = {
       source  = "hashicorp/http"
       version = "~> 3.4.2"
     }
@@ -29,11 +29,11 @@ provider "azurerm" {
   features {}
 
   # expect to use with env vars, otherwise derive from vars  ...
-  subscription_id = var.subscription_id
-  client_id       = var.client_id
-  client_secret   = var.client_secret
-  tenant_id       = var.tenant_id
-  environment     = var.azure_environment
+  subscription_id            = var.subscription_id
+  client_id                  = var.client_id
+  client_secret              = var.client_secret
+  tenant_id                  = var.tenant_id
+  environment                = var.azure_environment
   skip_provider_registration = true
 }
 
@@ -105,46 +105,45 @@ module "ave" {
 }
 
 module "common_rg" {
-  source                      = "./modules/rg"
-  count                          = var.create_common_rg ? 1 : 0
+  source              = "./modules/rg"
+  count               = var.create_common_rg ? 1 : 0
   resource_group_name = var.common_resource_group_name
-  location = var.common_location
+  location            = var.common_location
 }
 module "ddve" {
-  source                      = "./modules/ddve"
-  count                       = var.ddve_count > 0 ? var.ddve_count : 0
-  ddve_instance               = count.index + 1
-  ddve_type                   = var.ddve_type
-  ddve_version                = var.ddve_version
-  ddve_meta_disks             = var.ddve_meta_disks
-  ddve_password               = var.ddve_initial_password
-  ddve_tcp_inbound_rules_Inet = var.ddve_tcp_inbound_rules_Inet
-  environment                 = var.environment
-  location                    = var.location
-#  resource_group_name         = var.create_networks ? module.networks[0].resource_group_name : var.environment
-  dns_zone_name               = var.create_networks ? module.networks[0].dns_zone_name : var.networks_dns_zone_name
-  subnet_id                   = var.create_networks ? module.networks[0].infrastructure_subnet_id : var.networks_infrastructure_subnet_id
-  public_ip                   = var.ddve_public_ip
-  wan_ip                      = var.wan_ip
-  ddve_resource_group_name    = var.ddve_resource_group_name == null ? var.common_resource_group_name : var.resource_group_name
+  source                            = "./modules/ddve"
+  count                             = var.ddve_count > 0 ? var.ddve_count : 0
+  ddve_instance                     = count.index + 1
+  ddve_type                         = var.ddve_type
+  ddve_version                      = var.ddve_version
+  ddve_meta_disks                   = var.ddve_meta_disks
+  ddve_password                     = var.ddve_initial_password
+  ddve_tcp_inbound_rules_Inet       = var.ddve_tcp_inbound_rules_Inet
+  environment                       = var.environment
+  location                          = var.location
+  dns_zone_name                     = var.create_networks ? module.networks[0].dns_zone_name : var.networks_dns_zone_name
+  subnet_id                         = var.create_networks ? module.networks[0].infrastructure_subnet_id : var.networks_infrastructure_subnet_id
+  public_ip                         = var.ddve_public_ip
+  wan_ip                            = var.wan_ip
+  ddve_resource_group_name          = var.ddve_resource_group_name == null ? var.common_resource_group_name : var.resource_group_name
   ddve_networks_resource_group_name = var.create_networks ? module.networks[0].resource_group_name : var.networks_resource_group_name
 }
 
 module "ppdm" {
-  count                    = var.ppdm_count > 0 ? var.ppdm_count : 0
-  source                   = "./modules/ppdm"
-  ppdm_instance            = count.index + 1
-  depends_on               = [module.networks]
-  ppdm_version             = var.ppdm_version
-  ppdm_initial_password    = var.ppdm_initial_password
-  environment              = var.environment
-  location                 = var.location
-  resource_group_name      = var.create_networks ? module.networks[0].resource_group_name : var.environment
-  dns_zone_name            = var.create_networks ? module.networks[0].dns_zone_name : var.networks_dns_zone_name
-  subnet_id                = var.create_networks ? module.networks[0].infrastructure_subnet_id : var.networks_infrastructure_subnet_id
-  public_ip                = var.ppdm_public_ip
-  ppdm_name                = var.ppdm_name
-  ppdm_resource_group_name = var.ppdm_resource_group_name == null ? var.environment : var.ppdm_resource_group_name
+  count                             = var.ppdm_count > 0 ? var.ppdm_count : 0
+  source                            = "./modules/ppdm"
+  ppdm_instance                     = count.index + 1
+  depends_on                        = [module.networks]
+  ppdm_version                      = var.ppdm_version
+  ppdm_initial_password             = var.ppdm_initial_password
+  environment                       = var.environment
+  location                          = var.location
+  dns_zone_name                     = var.create_networks ? module.networks[0].dns_zone_name : var.networks_dns_zone_name
+  subnet_id                         = var.create_networks ? module.networks[0].infrastructure_subnet_id : var.networks_infrastructure_subnet_id
+  public_ip                         = var.ppdm_public_ip
+  ppdm_name                         = var.ppdm_name
+  ppdm_resource_group_name          = var.ppdm_resource_group_name == null ? var.common_resource_group_name : var.resource_group_name
+  ppdm_networks_resource_group_name = var.create_networks ? module.networks[0].resource_group_name : var.networks_resource_group_name
 }
 
 module "aks" {

@@ -26,9 +26,18 @@ locals {
 }
 
 
-data "azurerm_resource_group" "resource_group" {
-  name     = var.ppdm_resource_group_name
+data "azurerm_resource_group" "ppdm_networks_resource_group" {
+  name = var.ppdm_networks_resource_group_name
 }
+data "azurerm_resource_group" "ppdm_resource_group" {
+  name = var.ppdm_resource_group_name
+}
+
+
+data "http" "myip" {
+  url = "https://ipv4.icanhazip.com"
+}
+
 
 resource "random_string" "ppdm_diag_storage_account_name" {
   length  = 20
@@ -47,11 +56,17 @@ resource "tls_private_key" "ppdm" {
 
 resource "azurerm_storage_account" "ppdm_diag_storage_account" {
   name                     = random_string.ppdm_diag_storage_account_name.result
-  resource_group_name      = data.azurerm_resource_group.resource_group.name
-  location                 = data.azurerm_resource_group.resource_group.location
+  resource_group_name      = data.azurerm_resource_group.ppdm_resource_group.name
+  location                 = data.azurerm_resource_group.ppdm_resource_group.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
-
+  min_tls_version = "TLS1_2"
+  enable_https_traffic_only = true
+  network_rules {
+    default_action             = "Deny"
+    ip_rules = [chomp(data.http.myip.response_body)]
+    virtual_network_subnet_ids = [var.subnet_id]
+  }
   tags = {
     environment = var.deployment
     autodelete  = var.autodelete
@@ -64,75 +79,16 @@ resource "azurerm_marketplace_agreement" "ppdm" {
   offer     = local.ppdm_image[var.ppdm_version]["offer"]
   plan      = local.ppdm_image[var.ppdm_version]["sku"]
 }
-# DNS
-
-resource "azurerm_private_dns_a_record" "ppdm_dns" {
-  name                = local.ppdm_name
-  zone_name           = var.dns_zone_name
-  resource_group_name = var.resource_group_name
-  ttl                 = "60"
-  records             = [azurerm_network_interface.ppdm_nic.ip_configuration[0].private_ip_address]
-}
-
-## dynamic NSG
-resource "azurerm_network_security_group" "ppdm_security_group" {
-  name                = "${var.environment}-${local.ppdm_name}-security-group"
-  resource_group_name = data.azurerm_resource_group.resource_group.name
-  location            = data.azurerm_resource_group.resource_group.location
-
-  dynamic "security_rule" {
-    for_each = var.ppdm_tcp_inbound_rules_Vnet
-    content {
-      name                       = "TCP_inbound_rule_Vnet_${security_rule.key}"
-      priority                   = security_rule.key * 10 + 1000
-      direction                  = "Inbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_port_range          = "*"
-      destination_port_range     = security_rule.value
-      source_address_prefix      = "VirtualNetwork"
-      destination_address_prefix = "*"
-    }
-  }
-  dynamic "security_rule" {
-    for_each = var.ppdm_tcp_inbound_rules_Inet
-    content {
-      name                       = "TCP_inbound_rule_Inet_${security_rule.key}"
-      priority                   = security_rule.key * 10 + 1100
-      direction                  = "Inbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_port_range          = "*"
-      destination_port_range     = security_rule.value
-      source_address_prefix      = "Internet"
-      destination_address_prefix = "*"
-    }
-  }
-  security_rule {
-    name                       = "TCP_outbound_rule_1"
-    priority                   = 1010
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "*"
-    source_port_range          = "*"
-    destination_port_range     = 443
-    source_address_prefix      = "Internet"
-    destination_address_prefix = "*"
-  }
-}
 
 
-resource "azurerm_network_interface_security_group_association" "ppdm_security_group" {
-  network_interface_id      = azurerm_network_interface.ppdm_nic.id
-  network_security_group_id = azurerm_network_security_group.ppdm_security_group.id
-}
+
 
 # VMs
 ## network interface
 resource "azurerm_network_interface" "ppdm_nic" {
   name                = "${var.environment}-${local.ppdm_name}-nic"
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  resource_group_name      = data.azurerm_resource_group.ppdm_networks_resource_group.name
+  location                 = data.azurerm_resource_group.ppdm_networks_resource_group.location
   ip_configuration {
     name                          = "${var.environment}-${local.ppdm_name}-ip-config"
     subnet_id                     = var.subnet_id
@@ -143,8 +99,8 @@ resource "azurerm_network_interface" "ppdm_nic" {
 resource "azurerm_public_ip" "publicip" {
   count               = var.public_ip == "true" ? 1 : 0
   name                = "${var.environment}-${local.ppdm_name}-pip"
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  resource_group_name      = data.azurerm_resource_group.ppdm_networks_resource_group.name
+  location                 = data.azurerm_resource_group.ppdm_networks_resource_group.location
   allocation_method   = "Dynamic"
   domain_name_label   = "ppdm-${random_string.fqdn_name.result}"
 }

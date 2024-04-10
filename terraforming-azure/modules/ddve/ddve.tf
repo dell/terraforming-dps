@@ -131,8 +131,8 @@ resource "random_string" "fqdn_name" {
 }
 resource "azurerm_storage_account" "ddve_diag_storage_account" {
   name                     = "${var.ddve_instance}diag${random_string.storage_account_name.result}"
-  resource_group_name      = data.azurerm_ddve_resource_group.resource_group.name
-  location                 = data.azurerm_ddve_resource_group.resource_group.location
+  resource_group_name      = data.azurerm_resource_group.ddve_resource_group.name
+  location                 = data.azurerm_resource_group.ddve_resource_group.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
   tags = {
@@ -143,8 +143,8 @@ resource "azurerm_storage_account" "ddve_diag_storage_account" {
 
 resource "azurerm_storage_account" "ddve_atos" {
   name                     = "${var.ddve_instance}atos${random_string.storage_account_name.result}"
-  resource_group_name      = data.azurerm_ddve_resource_group.resource_group.name
-  location                 = data.azurerm_ddve_resource_group.resource_group.location
+  resource_group_name      = data.azurerm_resource_group.ddve_resource_group.name
+  location                 = data.azurerm_resource_group.ddve_resource_group.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
   network_rules {
@@ -211,8 +211,8 @@ resource "azurerm_public_ip" "publicip" {
 }
 resource "azurerm_virtual_machine" "ddve" {
   name                             = "${var.environment}-${local.ddve_name}"
-  location                         = data.azurerm_ddve_resource_group.resource_group.location
-  resource_group_name              = data.azurerm_ddve_resource_group.resource_group.name
+  location                         = data.azurerm_resource_group.ddve_resource_group.location
+  resource_group_name              = data.azurerm_resource_group.ddve_resource_group.name
   depends_on                       = [azurerm_network_interface.ddve_nic1, azurerm_network_interface.ddve_nic2, azurerm_network_interface_security_group_association.ddve_security_group_nic1, azurerm_network_interface_security_group_association.ddve_security_group_nic2]
   network_interface_ids            = [azurerm_network_interface.ddve_nic1.id, azurerm_network_interface.ddve_nic2.id]
   primary_network_interface_id     = azurerm_network_interface.ddve_nic1.id

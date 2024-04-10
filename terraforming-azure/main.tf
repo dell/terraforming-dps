@@ -122,7 +122,7 @@ module "ddve" {
   subnet_id                   = var.create_networks ? module.networks[0].infrastructure_subnet_id : var.networks_infrastructure_subnet_id
   public_ip                   = var.ddve_public_ip
   wan_ip                      = var.wan_ip
-  ddve_resource_group_name    = var.ddve_resource_group_name == null ? var.resource_group_name : var.environment
+  ddve_resource_group_name    = var.ddve_resource_group_name == null ? var.common_resource_group_name : var.resource_group_name
   ddve_networks_resource_group_name = var.create_networks ? module.networks[0].resource_group_name : var.networks_resource_group_name
 }
 

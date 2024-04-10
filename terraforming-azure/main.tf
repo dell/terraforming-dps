@@ -126,7 +126,7 @@ module "ddve" {
   public_ip                         = var.ddve_public_ip
   wan_ip                            = var.wan_ip
   ddve_resource_group_name          = var.ddve_resource_group_name == null ? var.common_resource_group_name : var.resource_group_name
-  ddve_networks_resource_group_name = var.create_networks ? module.networks[0].resource_group_name : var.networks_resource_group_name
+  ddve_networks_resource_group_name = var.create_networks ? module.networks[0].resource_group_name : var.networks_infrastructure_resource_group_name
 }
 
 module "ppdm" {
@@ -143,7 +143,7 @@ module "ppdm" {
   public_ip                         = var.ppdm_public_ip
   ppdm_name                         = var.ppdm_name
   ppdm_resource_group_name          = var.ppdm_resource_group_name == null ? var.common_resource_group_name : var.resource_group_name
-  ppdm_networks_resource_group_name = var.create_networks ? module.networks[0].resource_group_name : var.networks_resource_group_name
+  ppdm_networks_resource_group_name = var.create_networks ? module.networks[0].resource_group_name : var.networks_infrastructure_resource_group_name
 }
 
 module "aks" {

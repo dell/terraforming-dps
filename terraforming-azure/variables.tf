@@ -17,14 +17,6 @@ variable "location" {
 default = null
 }
 
-/*
-Network Module Variables, if not derived from environment/tfvars
-*/
-variable "create_networks" {
-  type    = bool
-  default = false
-  description = "if set to true, we will create networks in the environment"
-}
 
 
 variable "environment" {}

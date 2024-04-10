@@ -1,3 +1,12 @@
+/*
+Network Module Variables, if not derived from environment/tfvars
+*/
+variable "create_networks" {
+  type    = bool
+  default = false
+  description = "if set to true, we will create networks in the environment"
+}
+
 variable "dns_suffix" {
   description = "the DNS suffig when we create a network with internal dns"
 }
@@ -5,7 +14,7 @@ variable "dns_suffix" {
 variable "enable_aks_subnet" {
   description = "If set to true, create subnet for aks"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "enable_tkg_controlplane_subnet" {
@@ -58,7 +67,8 @@ variable "create_bastion" {
   type = bool
   default = false
 }
-variable "networks_resource_group_name" {
+variable "networks_infrastructure_resource_group_name" {
+  description = "name ofb the network rg when using existing"  
   default = null
 }
 
@@ -68,6 +78,7 @@ variable "networks_dns_zone_name" {
 
 variable "networks_infrastructure_subnet_id" {
   default = null
+  description = "Id of the subnet when using existing"
 }
 
 variable "vnet_name" {
@@ -75,7 +86,7 @@ variable "vnet_name" {
 }
 variable "network_rg_name" {
   default     =null
-  description = "The RG for Network if different is used"
+  description = "The RG for Network if different is used for existing vnet"
 }
 
 

@@ -117,7 +117,7 @@ module "ddve" {
   ddve_tcp_inbound_rules_Inet = var.ddve_tcp_inbound_rules_Inet
   environment                 = var.environment
   location                    = var.location
-  resource_group_name         = var.create_networks ? module.networks[0].resource_group_name : var.environment
+#  resource_group_name         = var.create_networks ? module.networks[0].resource_group_name : var.environment
   dns_zone_name               = var.create_networks ? module.networks[0].dns_zone_name : var.networks_dns_zone_name
   subnet_id                   = var.create_networks ? module.networks[0].infrastructure_subnet_id : var.networks_infrastructure_subnet_id
   public_ip                   = var.ddve_public_ip

@@ -205,7 +205,7 @@ resource "azurerm_public_ip" "publicip" {
   count               = var.public_ip == "true" ? 1 : 0
   name                = "${var.environment}-${local.ddve_name}-pip"
   location            = var.location
-  resource_group_name = var.resource_group_name
+  resource_group_name = data.azurerm_resource_group.ddve_networks_resource_group.name
   domain_name_label   = "ppdd-${random_string.fqdn_name.result}"
   allocation_method   = "Dynamic"
 }

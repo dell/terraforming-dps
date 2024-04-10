@@ -16,20 +16,6 @@ resource "azurerm_network_security_group" "ddve_security_group" {
       destination_address_prefix = "*"
     }
   }
-  dynamic "security_rule" {
-    for_each = var.ddve_tcp_inbound_rules_Inet
-    content {
-      name                       = "TCP_inbound_rule_Inet_${security_rule.key}"
-      priority                   = security_rule.key * 10 + 1100
-      direction                  = "Inbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_port_range          = "*"
-      destination_port_range     = security_rule.value
-      source_address_prefix      = "Internet"
-      destination_address_prefix = "*"
-    }
-  }
   security_rule {
     name                       = "TCP_outbound_rule_1"
     priority                   = 1010

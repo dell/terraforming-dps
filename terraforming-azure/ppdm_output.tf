@@ -41,10 +41,10 @@ output "PPDM_FQDN" {
 }
 
 
-output "PPDM_PRIVATE_FQDN" {
-  sensitive = false
-  value     = var.ppdm_count > 0 ? module.ppdm[0].private_fqdn : null
-}
+#output "PPDM_PRIVATE_FQDN" {
+#  sensitive = false
+#  value     = var.ppdm_count > 0 ? module.ppdm[0].private_fqdn : null
+#}
 output "ppdm_initial_password" {
   sensitive = true
   value     = var.ppdm_count > 0 ? var.ppdm_initial_password : null

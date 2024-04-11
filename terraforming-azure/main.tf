@@ -114,9 +114,9 @@ module "ddve" {
   source                            = "./modules/ddve"
   count                             = var.ddve_count > 0 ? var.ddve_count : 0
   ddve_instance                     = count.index + 1
-  ddve_type                         = var.ddve_type
-  ddve_version                      = var.ddve_version
-  ddve_meta_disks                   = var.ddve_meta_disks
+  ddve_type                         = var.ddvelist[count.index].ddve_type
+  ddve_version                      = var.ddvelist[count.index].ddve_version
+  ddve_meta_disks                   = var.ddvelist[count.index].ddve_meta_disks
   ddve_password                     = var.ddve_initial_password
   ddve_tcp_inbound_rules_Inet       = var.ddve_tcp_inbound_rules_Inet
   environment                       = var.environment
@@ -125,7 +125,7 @@ module "ddve" {
   subnet_id                         = var.create_networks ? module.networks[0].infrastructure_subnet_id : var.networks_infrastructure_subnet_id
   public_ip                         = var.ddve_public_ip
   wan_ip                            = var.wan_ip
-  ddve_resource_group_name          = var.ddve_resource_group_name == null ? var.common_resource_group_name : var.resource_group_name
+  ddve_resource_group_name          = var.create_common_rg ? var.common_resource_group_name : var.create_networks ? module.networks[0].resource_group_name: var.resource_group_name
   ddve_networks_resource_group_name = var.create_networks ? module.networks[0].resource_group_name : var.networks_infrastructure_resource_group_name
 }
 
@@ -142,7 +142,7 @@ module "ppdm" {
   subnet_id                         = var.create_networks ? module.networks[0].infrastructure_subnet_id : var.networks_infrastructure_subnet_id
   public_ip                         = var.ppdm_public_ip
   ppdm_name                         = var.ppdm_name
-  ppdm_resource_group_name          = var.ppdm_resource_group_name == null ? var.common_resource_group_name : var.resource_group_name
+  ppdm_resource_group_name          = var.create_common_rg ? var.common_resource_group_name : var.create_networks ? module.networks[0].resource_group_name: var.resource_group_name
   ppdm_networks_resource_group_name = var.create_networks ? module.networks[0].resource_group_name : var.networks_infrastructure_resource_group_name
 }
 

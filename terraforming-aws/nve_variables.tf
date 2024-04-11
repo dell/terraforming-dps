@@ -29,7 +29,7 @@ variable "nve_version" {
   description = "nve Version, can be '19.10.0.1', '19.9.0.0'"
   validation {
     condition = anytrue([
-      var.nve_version == "19.9.0.0",      
+      var.nve_version == "19.9.0.0",
       var.nve_version == "19.10.0.1",
     ])
     error_message = "Must be a valid nve Version, can be 19.10.0.1', '19.9.0.0'."

@@ -38,6 +38,28 @@ variable "ddve_public_ip" {
   description = "Enable Public IP on Datadomain Network Interface"
 }
 
+variable "ddvelist" {
+  default = [
+    {
+      "ddve_meta_disks" = [1000, 1000],
+      "ddve_type"       = "16 TB DDVE"
+      "ddve_version"    = "7.13.020"
+    },
+    {
+      "ddve_meta_disks" : [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000],
+      "ddve_type" : "96 TB DDVE"
+            "ddve_version"    = "7.13.020"
+    },
+    {
+      "ddve_meta_disks" : [1000, 1000, 1000, 1000],
+      "ddve_type" : "32 TB DDVE"
+    },
+    {
+      "ddve_meta_disks" : [2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000],
+      "ddve_type" : "256 TB DDVE"
+    }
+  ]
+}
 variable "ddve_version" {
   type        = string
   default     = "7.13.020"

@@ -20,7 +20,7 @@ variable "ppdm_version" {
     condition = anytrue([
       var.ppdm_version == "19.14.0",
       var.ppdm_version == "19.15.0",
-      var.ppdm_version == "19.16.0",      
+      var.ppdm_version == "19.16.0",
     ])
     error_message = "Must be a valid DDVE Version, can be: '19.14.0', '19.15.0', '19.16.0' ."
   }

@@ -1,5 +1,5 @@
-variable "create_client_vpn"{
-  default = false
+variable "create_client_vpn" {
+  default     = false
   description = "Create a pre-conig site2client"
 }
 

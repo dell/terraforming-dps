@@ -1,5 +1,4 @@
 variable "common_resource_group_name" {
-    default = null
     description = "Name of a common resorce group for all but network resources"
 }
 

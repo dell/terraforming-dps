@@ -114,7 +114,7 @@ module "ddve" {
   source                            = "./modules/ddve"
   count                             = var.ddve_count > 0 ? var.ddve_count : 0
   ddve_instance                     = count.index + 1
-  depends_on                        = [module.common_rg]
+  depends_on                        = [module.networks,module.common_rg]
   ddve_type                         = var.ddvelist[count.index].ddve_type
   ddve_version                      = var.ddvelist[count.index].ddve_version
   ddve_meta_disks                   = var.ddvelist[count.index].ddve_meta_disks
@@ -126,7 +126,7 @@ module "ddve" {
   subnet_id                         = var.create_networks ? module.networks[0].infrastructure_subnet_id : var.networks_infrastructure_subnet_id
   public_ip                         = var.ddve_public_ip
   wan_ip                            = var.wan_ip
-  ddve_resource_group_name          = var.create_common_rg ? var.common_resource_group_name : var.create_networks ? module.networks[0].resource_group_name : var.resource_group_name
+  ddve_resource_group_name          = var.create_common_rg ? module.common_rg[0].azurerm_resource_group.resource_group.name : var.create_networks ? module.networks[0].resource_group_name : var.resource_group_name
   ddve_networks_resource_group_name = var.create_networks ? module.networks[0].resource_group_name : var.networks_infrastructure_resource_group_name
 }
 
@@ -143,7 +143,7 @@ module "ppdm" {
   subnet_id                         = var.create_networks ? module.networks[0].infrastructure_subnet_id : var.networks_infrastructure_subnet_id
   public_ip                         = var.ppdm_public_ip
   ppdm_name                         = var.ppdm_name
-  ppdm_resource_group_name          = var.create_common_rg ? module.common_rg[0].resource_group_name : var.create_networks ? module.networks[0].resource_group_name : var.resource_group_name
+  ppdm_resource_group_name          = var.create_common_rg ? module.common_rg[0].azurerm_resource_group.resource_group.name : var.create_networks ? module.networks[0].resource_group_name : var.resource_group_name
   ppdm_networks_resource_group_name = var.create_networks ? module.networks[0].resource_group_name : var.networks_infrastructure_resource_group_name
 }
 

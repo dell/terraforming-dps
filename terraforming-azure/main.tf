@@ -133,7 +133,7 @@ module "ppdm" {
   count                             = var.ppdm_count > 0 ? var.ppdm_count : 0
   source                            = "./modules/ppdm"
   ppdm_instance                     = count.index + 1
-  depends_on                        = [module.networks]
+  depends_on                        = [module.networks,module.common_rg]
   ppdm_version                      = var.ppdm_version
   ppdm_initial_password             = var.ppdm_initial_password
   environment                       = var.environment

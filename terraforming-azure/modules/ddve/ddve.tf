@@ -95,6 +95,7 @@ data "azurerm_resource_group" "ddve_networks_resource_group" {
 
 data "azurerm_resource_group" "ddve_resource_group" {
   name = var.ddve_resource_group_name
+  depends_on                        = [module.common_rg]
 }
 
 

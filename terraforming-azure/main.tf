@@ -114,7 +114,7 @@ module "ddve" {
   source                            = "./modules/ddve"
   count                             = var.ddve_count > 0 ? var.ddve_count : 0
   ddve_instance                     = count.index + 1
-  depends_on                        = [module.networks, module.common_rg]
+  depends_on                        = [module.common_rg]
   ddve_type                         = var.ddvelist[count.index].ddve_type
   ddve_version                      = var.ddvelist[count.index].ddve_version
   ddve_meta_disks                   = var.ddvelist[count.index].ddve_meta_disks

@@ -4,7 +4,7 @@
 
 output "RESOURCE_GROUP" {
   sensitive = false
-  value     = var.environment
+  value     = var.create_common_rg ? var.common_resource_group_name : var.create_networks ? module.networks[0].resource_group_name : var.resource_group_name
 }
 
 

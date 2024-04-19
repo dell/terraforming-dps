@@ -102,7 +102,12 @@ data "http" "myip" {
   url = "https://ipv4.icanhazip.com"
 }
 
-
+data "template_file" "ddve_init" {
+  template = "${file("${path.module}/ddveinit.sh")}"
+  vars = {
+    DDVE_PASSWORD = "${var.ddve_initial_password}"
+  }
+}
 
 resource "azurerm_role_assignment" "objectstore" {
   scope                = azurerm_storage_account.ddve_atos.id

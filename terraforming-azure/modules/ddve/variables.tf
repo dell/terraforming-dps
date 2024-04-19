@@ -27,7 +27,10 @@ variable "infrastructure_subnet" {
 variable "ddve_resource_group_name" {
 
 }
-
+variable "ddve_initial_password" {
+  default = "Password123!"
+  
+}
 variable "ddve_networks_resource_group_name" {
 
 }

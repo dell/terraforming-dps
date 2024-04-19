@@ -102,12 +102,6 @@ data "http" "myip" {
   url = "https://ipv4.icanhazip.com"
 }
 
-data "template_file" "ddve_init" {
-  template = "${file("${path.module}/ddveinit.sh")}"
-  vars = {
-    DDVE_PASSWORD = "${var.ddve_initial_password}"
-  }
-}
 
 resource "azurerm_role_assignment" "objectstore" {
   scope                = azurerm_storage_account.ddve_atos.id
@@ -271,7 +265,6 @@ resource "azurerm_virtual_machine" "ddve" {
     computer_name  = local.ddve_name
     admin_username = "sysadmin"
     admin_password = var.ddve_password
-    custom_data    = base64encode(data.template_file.ddve_init.rendered)    
   }
   os_profile_linux_config {
     disable_password_authentication = true

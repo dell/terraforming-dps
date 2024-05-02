@@ -45,7 +45,7 @@ variable "ddvelist" {
     ddve_type       = string
     ddve_version    = string
   }))
-
+  description = "map describing each individual DDVE configuration"
   default = {
     firstdd = {
       ddve_name       = "ddve1"
@@ -83,46 +83,4 @@ variable "ddvelist" {
 
 
 
-variable "ddve_version" {
-  type        = string
-  default     = "8.0.010.MSDN"
-  description = "DDVE Version, can be: '7.7.525', '7.7.530', '7.10.115', '7.10.120', '7.13.020', '8.0.010', '7.10.1015.MSDN', '7.10.120.MSDN', '7.7.5020.MSDN', '7.13.0020.MSDN', '8.0.010.MSDN' "
-  validation {
-    condition = anytrue([
-      var.ddve_version == "7.7.525",
-      var.ddve_version == "7.7.530",
-      var.ddve_version == "7.10.115",
-      var.ddve_version == "7.10.120",
-      var.ddve_version == "7.13.020",
-      var.ddve_version == "8.0.010",
-      var.ddve_version == "7.10.1015.MSDN",
-      var.ddve_version == "7.10.120.MSDN",
-      var.ddve_version == "7.7.5020.MSDN",
-      var.ddve_version == "7.7.530.MSDN",
-      var.ddve_version == "7.13.0020.MSDN",
-      var.ddve_version == "8.0.010.MSDN"
-    ])
-    error_message = "Must be a valid DDVE Version, can be:  '7.7.525', '7.7.530', '7.10.115', '7.10.120', '7.13.020', '8.0.010', '7.10.1015.MSDN', '7.10.120.MSDN', '7.7.5020.MSDN', '7.13.0020.MSDN', '8.0.010.MSDN' ."
-  }
-}
-
-
-variable "ddve_type" {
-  type        = string
-  default     = "16 TB DDVE"
-  description = "DDVE Type, can be: '16 TB DDVE', '32 TB DDVE', '96 TB DDVE', '256 TB DDVE','16 TB DDVE PERF', '32 TB DDVE PERF', '96 TB DDVE PERF', '256 TB DDVE PERF'"
-  validation {
-    condition = anytrue([
-      var.ddve_type == "16 TB DDVE",
-      var.ddve_type == "32 TB DDVE",
-      var.ddve_type == "96 TB DDVE",
-      var.ddve_type == "256 TB DDVE",
-      var.ddve_type == "16 TB DDVE PERF",
-      var.ddve_type == "32 TB DDVE PERF",
-      var.ddve_type == "96 TB DDVE PERF",
-      var.ddve_type == "256 TB DDVE PERF"
-    ])
-    error_message = "Must be a valid DDVE Type, can be: '16 TB DDVE', '32 TB DDVE', '96 TB DDVE', '256 TB DDVE'."
-  }
-}
 

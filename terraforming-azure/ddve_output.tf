@@ -1,6 +1,6 @@
 
 output "DDVE_PRIVATE_IP" {
-  value       = var.ddve_count > 0 ? module.ddve[*].ddve_private_ip_address : null
+  value       = [ for ddve in  module.ddve: ddve.ddve_private_ip_address ]
   description = "The private ip address for the first DDVE Instance"
 }
 

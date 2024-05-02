@@ -21,7 +21,7 @@ variable "virtual_network_address_space" {
   default = []
 }
 variable "ddve_count" {
-  type = string
+  type = number
   default = ""
 }
 variable "infrastructure_subnet" {

@@ -27,10 +27,7 @@ variable "enable_tkg_workload_subnet" {
   type        = bool
   default     = false
 }
-variable "azure_environment" {
-  description = "The Azure cloud environment to use. Available values at https://www.terraform.io/docs/providers/azurerm/#environment"
-  default     = "public"
-}
+
 
 
 variable "virtual_network_address_space" {

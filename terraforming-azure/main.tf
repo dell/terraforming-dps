@@ -112,12 +112,13 @@ module "common_rg" {
 }
 module "ddve" {
   source                            = "./modules/ddve"
-  count                             = var.ddve_count > 0 ? var.ddve_count : 0
-  ddve_instance                     = count.index + 1
+  for_each = var.ddvelist
+  ddve_count                             = var.ddvelist.index +1
   depends_on                        = [module.networks,module.common_rg]
-  ddve_type                         = var.ddvelist[count.index].ddve_type
-  ddve_version                      = var.ddvelist[count.index].ddve_version
-  ddve_meta_disks                   = var.ddvelist[count.index].ddve_meta_disks
+  ddve_instance                     = each.value.ddve_name
+  ddve_type                         = each.value.ddve_type
+  ddve_version                      = each.value.ddve_version
+  ddve_meta_disks                   = each.value.ddve_meta_disks
   ddve_password                     = var.ddve_initial_password
   ddve_tcp_inbound_rules_Inet       = var.ddve_tcp_inbound_rules_Inet
   environment                       = var.environment

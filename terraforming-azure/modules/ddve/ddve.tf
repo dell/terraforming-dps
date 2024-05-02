@@ -86,7 +86,6 @@ locals {
       version   = "7.7.525"
     }
   }
-  ddve_name = "ddve${var.ddve_instance}"
 
 }
 data "azurerm_resource_group" "ddve_networks_resource_group" {
@@ -171,7 +170,7 @@ resource "azurerm_storage_container" "atos" {
 
 
 resource "azurerm_marketplace_agreement" "ddve" {
-  count     = var.ddve_instance == 1 ? 1 : 0
+  count     = var.ddve_count == 1 ? 1 : 0
   publisher = local.ddve_image[var.ddve_version]["publisher"]
   offer     = local.ddve_image[var.ddve_version]["offer"]
   plan      = local.ddve_image[var.ddve_version]["sku"]
@@ -184,37 +183,37 @@ resource "azurerm_marketplace_agreement" "ddve" {
 # VMs
 ## network interface
 resource "azurerm_network_interface" "ddve_nic1" {
-  name                = "${var.environment}-${local.ddve_name}-nic1"
+  name                = "${var.environment}-${var.ddve_instance}-nic1"
   location            = data.azurerm_resource_group.ddve_networks_resource_group.location
   resource_group_name = data.azurerm_resource_group.ddve_networks_resource_group.name
   ip_configuration {
     primary                       = "true"
-    name                          = "${var.environment}-${local.ddve_name}-ip-config"
+    name                          = "${var.environment}-${var.ddve_instance}-ip-config"
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = var.public_ip == "true" ? azurerm_public_ip.publicip.0.id : null
   }
 }
 resource "azurerm_network_interface" "ddve_nic2" {
-  name                = "${var.environment}-${local.ddve_name}-nic2"
+  name                = "${var.environment}-${var.ddve_instance}-nic2"
   location            = data.azurerm_resource_group.ddve_networks_resource_group.location
   resource_group_name = data.azurerm_resource_group.ddve_networks_resource_group.name
   ip_configuration {
-    name                          = "${var.environment}-${local.ddve_name}-ip-config1"
+    name                          = "${var.environment}-${var.ddve_instance}-ip-config1"
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Dynamic"
   }
 }
 resource "azurerm_public_ip" "publicip" {
   count               = var.public_ip == "true" ? 1 : 0
-  name                = "${var.environment}-${local.ddve_name}-pip"
+  name                = "${var.environment}-${var.ddve_instance}-pip"
   location            = var.location
   resource_group_name = data.azurerm_resource_group.ddve_networks_resource_group.name
   domain_name_label   = "ppdd-${random_string.fqdn_name.result}"
   allocation_method   = "Dynamic"
 }
 resource "azurerm_virtual_machine" "ddve" {
-  name                             = "${var.environment}-${local.ddve_name}"
+  name                             = "${var.environment}-${var.ddve_instance}"
   location                         = data.azurerm_resource_group.ddve_resource_group.location
   resource_group_name              = data.azurerm_resource_group.ddve_resource_group.name
   depends_on                       = [azurerm_network_interface.ddve_nic1, azurerm_network_interface.ddve_nic2, azurerm_network_interface_security_group_association.ddve_security_group_nic1, azurerm_network_interface_security_group_association.ddve_security_group_nic2]
@@ -224,13 +223,13 @@ resource "azurerm_virtual_machine" "ddve" {
   delete_os_disk_on_termination    = "true"
   delete_data_disks_on_termination = "true"
   storage_os_disk {
-    name              = "${local.ddve_name}-DDVEOsDisk"
+    name              = "${var.ddve_instance}-DDVEOsDisk"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = local.ddve_size[var.ddve_type].ddve_disk_type
   }
   storage_data_disk {
-    name              = "${local.ddve_name}-nvr-disk"
+    name              = "${var.ddve_instance}-nvr-disk"
     disk_size_gb      = "10"
     create_option     = "FromImage"
     managed_disk_type = local.ddve_size[var.ddve_type].ddve_disk_type
@@ -240,7 +239,7 @@ resource "azurerm_virtual_machine" "ddve" {
   dynamic "storage_data_disk" {
     for_each = var.ddve_meta_disks
     content {
-      name              = "${local.ddve_name}-Metadata-${storage_data_disk.key + 1}"
+      name              = "${var.ddve_instance}-Metadata-${storage_data_disk.key + 1}"
       lun               = storage_data_disk.key + 1
       disk_size_gb      = storage_data_disk.value
       create_option     = "empty"
@@ -262,7 +261,7 @@ resource "azurerm_virtual_machine" "ddve" {
     version   = local.ddve_image[var.ddve_version]["version"]
   }
   os_profile {
-    computer_name  = local.ddve_name
+    computer_name  = var.ddve_instance
     admin_username = "sysadmin"
     admin_password = var.ddve_password
   }

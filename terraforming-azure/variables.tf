@@ -17,7 +17,10 @@ variable "location" {
 default = null
 }
 
-
+variable "azure_environment" {
+  description = "The Azure cloud environment to use. Available values at https://www.terraform.io/docs/providers/azurerm/#environment"
+  default     = "public"
+}
 
 variable "environment" {}
 variable "resource_group_name" {

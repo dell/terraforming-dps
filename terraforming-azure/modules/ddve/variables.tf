@@ -20,7 +20,10 @@ variable "virtual_network_address_space" {
   type    = list(any)
   default = []
 }
-
+variable "ddve_count" {
+  type = string
+  default = ""
+}
 variable "infrastructure_subnet" {
   default = ""
 }
@@ -39,7 +42,7 @@ variable "ddve_networks_resource_group_name" {
 #}
 
 variable "ddve_instance" {
-  type = number
+  type = string
 }
 
 

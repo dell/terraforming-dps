@@ -39,26 +39,20 @@ variable "ddve_public_ip" {
 }
 
 variable "ddvelist" {
-  default = [
-    {
-      "ddve_meta_disks" = [1000, 1000],
-      "ddve_type"       = "16 TB DDVE"
-      "ddve_version"    = "7.13.020"
-    },
-    {
-      "ddve_meta_disks" : [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000],
-      "ddve_type" : "96 TB DDVE"
-            "ddve_version"    = "7.13.020"
-    },
-    {
-      "ddve_meta_disks" : [1000, 1000, 1000, 1000],
-      "ddve_type" : "32 TB DDVE"
-    },
-    {
-      "ddve_meta_disks" : [2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000],
-      "ddve_type" : "256 TB DDVE"
-    }
-  ]
+  type = map(object({
+      ddev_name = string
+      ddve_meta_disks = list(string)
+      ddve_type       = string
+      ddve_version    = string
+}))
+  default = {
+   firstdd = {
+      ddve_name = "ddve1"
+      ddve_meta_disks = [1000, 1000],
+      ddve_type       = "16 TB DDVE"
+      ddve_version    = "7.13.020"
+   }
+  }
 }
 variable "ddve_version" {
   type        = string

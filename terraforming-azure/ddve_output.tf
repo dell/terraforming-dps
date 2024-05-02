@@ -1,44 +1,44 @@
 
 output "DDVE_PRIVATE_IP" {
-  value       = [ for ddve in  module.ddve: ddve.ddve_private_ip_address ]
+  value       = [for ddve in module.ddve : ddve.ddve_private_ip_address]
   description = "The private ip address for the first DDVE Instance"
 }
 
 output "ddve_private_ip" {
-  value       = var.ddve_count > 0 ? module.ddve[0].ddve_private_ip_address : null
+  value       = [for ddve in module.ddve : ddve.ddve_private_ip_address]
   description = "The private ip addresses for the DDVE Instances"
 }
 
 output "DDVE_SSH_PRIVATE_KEY" {
   sensitive   = true
-  value       = var.ddve_count > 0 ? module.ddve[*].ssh_private_key : null
+  value       = [for ddve in module.ddve : ddve.ssh_private_key]
   description = "The ssh private key for the DDVE Instance"
 }
 output "ddve_ssh_private_key" {
   sensitive   = true
-  value       = var.ddve_count > 0 ? module.ddve[0].ssh_private_key : null
+  value       = [for ddve in module.ddve : ddve.ssh_private_key]
   description = "The ssh private key´s for the DDVE Instances"
 }
 
 output "DDVE_SSH_PUBLIC_KEY" {
-  value       = var.ddve_count > 0 ? module.ddve[0].ssh_public_key : null
+  value       = [for ddve in module.ddve : ddve.ssh_public_key]
   sensitive   = true
   description = "The ssh public key for the DDVE Instance"
 }
 
 output "ddve_ssh_public_key" {
-  value       = var.ddve_count > 0 ? module.ddve[*].ssh_public_key : null
+  value       = [for ddve in module.ddve : ddve.ssh_public_key]
   sensitive   = true
   description = "The ssh public keys for the DDVE Instances"
 }
 #output "ddve_private_fqdn" {
 #  sensitive   = false
-#  value       = var.ddve_count > 0 ? module.ddve[0].private_fqdn : null
+#  value       = var.ddve_count > 0 ? module.ddve[0].private_fqdn ]
 #  description = "the private FQDN of the first DDVE"
 #}
 #output "DDVE_PRIVATE_FQDN" {
 #  sensitive   = false
-#  value       = var.ddve_count > 0 ? module.ddve[*].private_fqdn : null
+#  value       = [ for ddve in  module.ddve : ddve.private_fqdn ]
 #  description = "the private FQDN of the DDVEs"#
 #}
 
@@ -55,23 +55,23 @@ output "DDVE_PUBLIC_FQDN" {
 
 output "DDVE_PASSWORD" {
   sensitive = true
-  value     = var.ddve_count > 0 ? var.ddve_initial_password : null
+  value     = [for ddve in module.ddve : ddve.ddve_initial_password]
 }
 
 output "DDVE_ATOS_STORAGE_ACCOUNT" {
   sensitive = true
-  value     = var.ddve_count > 0 ? module.ddve[*].atos_account : null
+  value     = [for ddve in module.ddve : ddve.atos_account]
 }
 output "DDVE_ATOS_CONTAINER" {
   sensitive = true
-  value     = var.ddve_count > 0 ? module.ddve[*].atos_container : null
+  value     = [for ddve in module.ddve : ddve.atos_container]
 }
 
 output "ddve_atos_storageaccount" {
   sensitive = true
-  value     = var.ddve_count > 0 ? module.ddve[0].atos_account : null
+  value     = [for ddve in module.ddve : ddve.atos_account]
 }
 output "ddve_atos_container" {
   sensitive = true
-  value     = var.ddve_count > 0 ? module.ddve[0].atos_container : null
+  value     = [for ddve in module.ddve : ddve.atos_container]
 }

@@ -8,3 +8,26 @@
         managed_disk_type = var.ddve_disk_type
         lun                     = count.index    
     }
+
+
+####
+
+
+  {
+    "ddve_meta_disks":[1000,1000,1000,1000,1000,1000,1000,1000,1000,1000],
+    "ddve_type":"96 TB DDVE",
+    "ddve_version": "7.13.0020.MSDN"    
+  },
+    {
+    "ddve_meta_disks":[2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000],
+    "ddve_type":"256 TB DDVE",
+    "ddve_version": "7.13.0020.MSDN"
+    },
+  {
+    "ddve_meta_disks":[1000,1000,1000,1000],
+    "ddve_type":"32 TB DDVE",
+    "ddve_version": "7.13.0020.MSDN"
+  }  
+
+
+  

@@ -47,9 +47,9 @@ variable "ddvelist" {
 }))
   default = {
    firstdd = {
-      ddve_name = "ddve1"
+      ddve_name = "ddve1",
       ddve_meta_disks = [1000, 1000],
-      ddve_type       = "16 TB DDVE"
+      ddve_type       = "16 TB DDVE",
       ddve_version    = "7.13.020"
    }
   }
@@ -65,7 +65,7 @@ variable "ddve_version" {
       var.ddve_version == "7.10.115",
       var.ddve_version == "7.10.120",
       var.ddve_version == "7.13.020",
-      var.ddee_version == "8.0.010",
+      var.ddve_version == "8.0.010",
       var.ddve_version == "7.10.1015.MSDN",
       var.ddve_version == "7.10.120.MSDN",
       var.ddve_version == "7.7.5020.MSDN",

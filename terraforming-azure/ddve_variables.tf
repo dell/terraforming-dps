@@ -48,7 +48,7 @@ variable "ddvelist" {
 
   default = {
     firstdd = {
-      ddve_name       = "ddve1asggiasgiasgisgasiugasiugasigai"
+      ddve_name       = "ddve1"
       ddve_meta_disks = [1000, 1000]
       ddve_type       = "16 TB DDVE"
       ddve_version    = "8.0.010.MSDN"
@@ -57,7 +57,7 @@ variable "ddvelist" {
   validation {
     condition = anytrue([
       for ddve in values(var.ddvelist):
-      length(ddve.ddve_name)  > 0 && length(ddve.ddve_name) < 14
+      length(ddve.ddve_name)  == 1 # && length(ddve.ddve_name) < 14
     ])
     error_message = "The Name length oh the ddve  must not exceed 15 chars"
   }

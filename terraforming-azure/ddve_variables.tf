@@ -63,10 +63,16 @@ variable "ddvelist" {
   }
   validation {
     condition = alltrue([
-      for version in values(var.ddvelist) : contains(["7.7.525", "7.7.530", "7.10.115", "7.10.120", "7.13.020", "8.0.010", "7.10.1015.MSDN", "7.10.120.MSDN", "7.7.5020.MSDN", "7.13.0020.MSDN", "8.0.010.MSDN"], version.ddve_version)
+      for ddve in values(var.ddvelist) : contains(["7.7.525", "7.7.530", "7.10.115", "7.10.120", "7.13.020", "8.0.010", "7.10.1015.MSDN", "7.10.120.MSDN", "7.7.5020.MSDN", "7.13.0020.MSDN", "8.0.010.MSDN"], ddve.ddve_version)
     ])
     error_message = "Must be a valid DDVE Version, can be:  '7.7.525', '7.7.530', '7.10.115', '7.10.120', '7.13.020', '8.0.010', '7.10.1015.MSDN', '7.10.120.MSDN', '7.7.5020.MSDN', '7.13.0020.MSDN', '8.0.010.MSDN' ."
   }
+  validation {
+    condition = alltrue([
+      for ddve in values(var.ddvelist) : contains(["16 TB DDVE", "32 TB DDVE", "96 TB DDVE", "256 TB DDVE","16 TB DDVE PERF", "32 TB DDVE PERF", "96 TB DDVE PERF", "256 TB DDVE PERF"], ddve.ddve_type)
+    ])
+    error_message = "DDVE Type, can be: '16 TB DDVE', '32 TB DDVE', '96 TB DDVE', '256 TB DDVE','16 TB DDVE PERF', '32 TB DDVE PERF', '96 TB DDVE PERF', '256 TB DDVE PERF'."
+  }  
 }
 
 

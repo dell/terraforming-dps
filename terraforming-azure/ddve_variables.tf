@@ -39,23 +39,30 @@ variable "ddve_public_ip" {
 }
 
 variable "ddvelist" {
+  type = map(object({
+    ddve_name       = string
+    ddve_meta_disks = list(string)
+    ddve_type       = string
+    ddve_version    = string
+  }))
+
   default = {
-    "firstdd" = {
-      "ddve_name"       = "ddve1"
-      "ddve_meta_disks" = [1000, 1000]
-      "ddve_type"       = "16 TB DDVE"
-      "ddve_version"    = "8.0.010.MSDN"
+    firstdd = {
+      ddve_name       = "ddve1"
+      ddve_meta_disks = [1000, 1000]
+      ddve_type       = "16 TB DDVE"
+      ddve_version    = "8.0.010.MSDN"
     }
   }
-}
-
-variable "ddve_name" {
-    default = "ddve1"
-    validation {
-    condition     = length(var.ddve_name) >= 1 && length(var.ddve_name) <= 15
+  validation {
+    condition = alltrue([
+      for ddve in values(var.ddve_list):
+      length(ddve.ddve_name)  >= 1 && length(ddve.ddve_name) <= 15
+    ])
     error_message = "The Name length oh the ddve  must not exceed 15 chars"
   }
 }
+
 variable "ddve_version" {
   type        = string
   default     = "8.0.010.MSDN"

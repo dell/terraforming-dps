@@ -55,7 +55,7 @@ output "DDVE_PUBLIC_FQDN" {
 
 output "DDVE_PASSWORD" {
   sensitive = true
-  value     = [for ddve in module.ddve : ddve.ddve_initial_password]
+  value     = [for ddve in module.ddve : var.ddve_initial_password]
 }
 
 output "DDVE_ATOS_STORAGE_ACCOUNT" {

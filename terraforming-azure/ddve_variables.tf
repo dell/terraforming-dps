@@ -48,7 +48,7 @@ variable "ddvelist" {
 
   default = {
     firstdd = {
-      ddve_name       = "ddve1"
+      ddve_name       = "ddve1asggiasgiasgisgasiugasiugasigai"
       ddve_meta_disks = [1000, 1000]
       ddve_type       = "16 TB DDVE"
       ddve_version    = "8.0.010.MSDN"

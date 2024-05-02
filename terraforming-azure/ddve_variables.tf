@@ -73,18 +73,18 @@ variable "ddvelist" {
   }
   validation {
     condition = anytrue([
-      var.ddvelist.ddve_version == "7.7.525",
-      var.ddvelist.ddve_version == "7.7.530",
-      var.ddvelist.ddve_version == "7.10.115",
-      var.ddvelist.ddve_version == "7.10.120",
-      var.ddvelist.ddve_version == "7.13.020",
-      var.ddvelist.ddve_version == "8.0.010",
-      var.ddvelist.ddve_version == "7.10.1015.MSDN",
-      var.ddvelist.ddve_version == "7.10.120.MSDN",
-      var.ddvelist.ddve_version == "7.7.5020.MSDN",
-      var.ddvelist.ddve_version == "7.7.530.MSDN",
-      var.ddvelist.ddve_version == "7.13.0020.MSDN",
-      var.ddvelist.ddve_version == "8.0.010.MSDN"
+      var.ddvelist[*].ddve_version == "7.7.525",
+      var.ddvelist[*].ddve_version == "7.7.530",
+      var.ddvelist[*].ddve_version == "7.10.115",
+      var.ddvelist[*].ddve_version == "7.10.120",
+      var.ddvelist[*].ddve_version == "7.13.020",
+      var.ddvelist[*].ddve_version == "8.0.010",
+      var.ddvelist[*].ddve_version == "7.10.1015.MSDN",
+      var.ddvelist[*].ddve_version == "7.10.120.MSDN",
+      var.ddvelist[*].ddve_version == "7.7.5020.MSDN",
+      var.ddvelist[*].ddve_version == "7.7.530.MSDN",
+      var.ddvelist[*].ddve_version == "7.13.0020.MSDN",
+      var.ddvelist[*].ddve_version == "8.0.010.MSDN"
     ])
     error_message = "Must be a valid DDVE Version, can be:  '7.7.525', '7.7.530', '7.10.115', '7.10.120', '7.13.020', '8.0.010', '7.10.1015.MSDN', '7.10.120.MSDN', '7.7.5020.MSDN', '7.13.0020.MSDN', '8.0.010.MSDN' ."
   }

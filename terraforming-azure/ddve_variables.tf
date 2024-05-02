@@ -40,7 +40,7 @@ variable "ddve_public_ip" {
 
 variable "ddvelist" {
   type = map(object({
-      ddev_name = string
+      ddve_name = string
       ddve_meta_disks = list(string)
       ddve_type       = string
       ddve_version    = string

@@ -55,19 +55,19 @@ variable "ddvelist" {
     }
   }
   validation {
-    condition     = length(var.ddvelist.ddve_name) >= 1 && length(var.ddvelist.ddve_name) <= 15
+    condition     = length(var.ddvelist[*].ddve_name) >= 1 && length(var.ddvelist[*].ddve_name) <= 15
     error_message = "The Name length oh the ddve  must not exceed 15 chars"
   }
   validation {
     condition = anytrue([
-      var.ddvelist.ddve_type == "16 TB DDVE",
-      var.ddvelist.ddve_type == "32 TB DDVE",
-      var.ddvelist.ddve_type == "96 TB DDVE",
-      var.ddvelist.ddve_type == "256 TB DDVE",
-      var.ddvelist.ddve_type == "16 TB DDVE PERF",
-      var.ddvelist.ddve_type == "32 TB DDVE PERF",
-      var.ddvelist.ddve_type == "96 TB DDVE PERF",
-      var.ddvelist.ddve_type == "256 TB DDVE PERF"
+      var.ddvelist[*].ddve_type == "16 TB DDVE",
+      var.ddvelist[*].ddve_type == "32 TB DDVE",
+      var.ddvelist[*].ddve_type == "96 TB DDVE",
+      var.ddvelist[*].ddve_type == "256 TB DDVE",
+      var.ddvelist[*].ddve_type == "16 TB DDVE PERF",
+      var.ddvelist[*].ddve_type == "32 TB DDVE PERF",
+      var.ddvelist[*].ddve_type == "96 TB DDVE PERF",
+      var.ddvelist[*].ddve_type == "256 TB DDVE PERF"
     ])
     error_message = "Must be a valid DDVE Type, can be: '16 TB DDVE', '32 TB DDVE', '96 TB DDVE', '256 TB DDVE'."
   }

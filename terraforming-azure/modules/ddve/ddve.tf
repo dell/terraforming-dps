@@ -52,13 +52,24 @@ locals {
       sku       = "ddve-710115"
       version   = "7.10.1015"
     }
-    "7.7.5020.MSDN" = {
+    "7.7.5025.MSDN" = {
       publisher = "dellemc"
       offer     = "dell-emc-datadomain-virtual-edition-v4"
-      sku       = "ddve-77520"
-      version   = "7.7.5020"
+      sku       = "ddve-77525"
+      version   = "7.7.5025"
     }
-
+    "7.7.5030.MSDN" = {
+      publisher = "dellemc"
+      offer     = "dell-emc-datadomain-virtual-edition-v4"
+      sku       = "ddve-77525"
+      version   = "7.7.530"
+    }    
+    "8.0.010.MSDN" = {
+      publisher = "dellemc"
+      offer     = "dell-emc-datadomain-virtual-edition-v4"
+      sku       = "ddve-80"
+      version   = "8.0.010"
+    }   
     # Branded Image SKU´s
 
     "7.13.020" = {
@@ -84,6 +95,18 @@ locals {
       offer     = "dell-emc-datadomain-virtual-edition-v4"
       sku       = "ddve"
       version   = "7.7.525"
+    }
+    "7.7.530" = {
+      publisher = "dellemc"
+      offer     = "dell-emc-datadomain-virtual-edition-v4"
+      sku       = "ddve"
+      version   = "7.7.530"
+    }
+    "8.0.010" = {
+      publisher = "dellemc"
+      offer     = "dell-emc-datadomain-virtual-edition-v4"
+      sku       = "ddve"
+      version   = "8.0.010"
     }
   }
 
@@ -124,16 +147,16 @@ resource "random_string" "fqdn_name" {
   upper   = false
 }
 resource "azurerm_storage_account" "ddve_diag_storage_account" {
-  name                     = "${var.ddve_instance}diag${random_string.storage_account_name.result}"
-  resource_group_name      = data.azurerm_resource_group.ddve_resource_group.name
-  location                 = data.azurerm_resource_group.ddve_resource_group.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-  min_tls_version = "TLS1_2"
+  name                      = "${var.ddve_instance}diag${random_string.storage_account_name.result}"
+  resource_group_name       = data.azurerm_resource_group.ddve_resource_group.name
+  location                  = data.azurerm_resource_group.ddve_resource_group.location
+  account_tier              = "Standard"
+  account_replication_type  = "LRS"
+  min_tls_version           = "TLS1_2"
   enable_https_traffic_only = true
   network_rules {
     default_action             = "Deny"
-    ip_rules = [chomp(data.http.myip.response_body)]
+    ip_rules                   = [chomp(data.http.myip.response_body)]
     virtual_network_subnet_ids = [var.subnet_id]
   }
   tags = {
@@ -143,16 +166,16 @@ resource "azurerm_storage_account" "ddve_diag_storage_account" {
 }
 
 resource "azurerm_storage_account" "ddve_atos" {
-  name                     = "${var.ddve_instance}atos${random_string.storage_account_name.result}"
-  resource_group_name      = data.azurerm_resource_group.ddve_resource_group.name
-  location                 = data.azurerm_resource_group.ddve_resource_group.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-  min_tls_version = "TLS1_2"
+  name                      = "${var.ddve_instance}atos${random_string.storage_account_name.result}"
+  resource_group_name       = data.azurerm_resource_group.ddve_resource_group.name
+  location                  = data.azurerm_resource_group.ddve_resource_group.location
+  account_tier              = "Standard"
+  account_replication_type  = "LRS"
+  min_tls_version           = "TLS1_2"
   enable_https_traffic_only = true
   network_rules {
     default_action             = "Deny"
-    ip_rules = [chomp(data.http.myip.response_body)]
+    ip_rules                   = [chomp(data.http.myip.response_body)]
     virtual_network_subnet_ids = [var.subnet_id]
   }
   tags = {

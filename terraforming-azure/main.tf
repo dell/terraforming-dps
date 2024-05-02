@@ -112,9 +112,9 @@ module "common_rg" {
 }
 module "ddve" {
   source                            = "./modules/ddve"
-  for_each = var.ddvelist
-  ddve_count                             = var.ddvelist.index +1
-  depends_on                        = [module.networks,module.common_rg]
+  for_each                          = var.ddvelist
+  ddve_count                        = var.ddvelist.index + 1
+  depends_on                        = [module.networks, module.common_rg]
   ddve_instance                     = each.value.ddve_name
   ddve_type                         = each.value.ddve_type
   ddve_version                      = each.value.ddve_version
@@ -144,7 +144,7 @@ module "ppdm" {
   subnet_id                         = var.create_networks ? module.networks[0].infrastructure_subnet_id : var.networks_infrastructure_subnet_id
   public_ip                         = var.ppdm_public_ip
   ppdm_name                         = var.ppdm_name
-  ppdm_resource_group_name          = var.create_common_rg ? var.common_resource_group_name: var.create_networks ? module.networks[0].resource_group_name : var.resource_group_name
+  ppdm_resource_group_name          = var.create_common_rg ? var.common_resource_group_name : var.create_networks ? module.networks[0].resource_group_name : var.resource_group_name
   ppdm_networks_resource_group_name = var.create_networks ? module.networks[0].resource_group_name : var.networks_infrastructure_resource_group_name
 }
 

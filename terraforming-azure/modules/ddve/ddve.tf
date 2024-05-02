@@ -206,7 +206,6 @@ resource "azurerm_marketplace_agreement" "ddve" {
   plan      = local.ddve_image[var.ddve_version]["sku"]
   lifecycle {
     prevent_destroy = true
-
 } 
 }
 # DNS

@@ -45,6 +45,7 @@ variable "ddvelist" {
       ddve_type       = string
       ddve_version    = string
 }))
+
   default = {
    firstdd = {
       ddve_name = "ddve1",
@@ -52,6 +53,12 @@ variable "ddvelist" {
       ddve_type       = "16 TB DDVE",
       ddve_version    = "7.13.020"
    }
+  }
+}
+variable "ddve_name" {
+  validation {
+    condition     = length(var.ddve_name) >= 1 && length(var.ddve_name) <= 15
+    error_message = "The Name length oh the ddve  must not exceed 15 chars"
   }
 }
 variable "ddve_version" {

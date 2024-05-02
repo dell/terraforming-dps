@@ -132,7 +132,7 @@ resource "azurerm_role_assignment" "objectstore" {
 }
 
 resource "random_string" "storage_account_name" {
-  length  = 16
+  length  = 20
   special = false
   upper   = false
 }
@@ -147,7 +147,7 @@ resource "random_string" "fqdn_name" {
   upper   = false
 }
 resource "azurerm_storage_account" "ddve_diag_storage_account" {
-  name                      = "${var.ddve_instance}diag${random_string.storage_account_name.result}"
+  name                      = "diag${random_string.storage_account_name.result}"
   resource_group_name       = data.azurerm_resource_group.ddve_resource_group.name
   location                  = data.azurerm_resource_group.ddve_resource_group.location
   account_tier              = "Standard"
@@ -160,13 +160,14 @@ resource "azurerm_storage_account" "ddve_diag_storage_account" {
     virtual_network_subnet_ids = [var.subnet_id]
   }
   tags = {
+    vmname = var.ddve_instance
     environment = var.deployment
     autodelete  = var.autodelete
   }
 }
 
 resource "azurerm_storage_account" "ddve_atos" {
-  name                      = "${var.ddve_instance}atos${random_string.storage_account_name.result}"
+  name                      = "atos${random_string.storage_account_name.result}"
   resource_group_name       = data.azurerm_resource_group.ddve_resource_group.name
   location                  = data.azurerm_resource_group.ddve_resource_group.location
   account_tier              = "Standard"

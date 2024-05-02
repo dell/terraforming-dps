@@ -129,10 +129,6 @@ resource "azurerm_role_assignment" "objectstore" {
   scope                = azurerm_storage_account.ddve_atos.id
   role_definition_name = "Storage Blob Data Owner"
   principal_id         = azurerm_virtual_machine.ddve.identity[0].principal_id
-  lifecycle {
-    prevent_destroy = true
-
-} 
 }
 
 resource "random_string" "storage_account_name" {
@@ -203,10 +199,7 @@ resource "azurerm_storage_container" "atos" {
 resource "azurerm_marketplace_agreement" "ddve" {
   publisher = local.ddve_image[var.ddve_version]["publisher"]
   offer     = local.ddve_image[var.ddve_version]["offer"]
-  plan      = local.ddve_image[var.ddve_version]["sku"]
-  lifecycle {
-    prevent_destroy = true
-} 
+  plan      = local.ddve_image[var.ddve_version]["sku"] 
 }
 # DNS
 

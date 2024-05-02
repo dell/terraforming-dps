@@ -57,7 +57,7 @@ variable "ddvelist" {
   validation {
     condition = alltrue([
       for ddve in values(var.ddvelist):
-      length(ddve.ddve_name)  >= 1 && length(ddve.ddve_name) <= 15
+      length(ddve.ddve_name)  >= 1 && length(ddve.ddve_name) <= 14
     ])
     error_message = "The Name length oh the ddve  must not exceed 15 chars"
   }

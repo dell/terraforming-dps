@@ -57,11 +57,31 @@ variable "ddvelist" {
   validation {
     condition = anytrue([
       for ddve in values(var.ddvelist):
-      length(ddve.ddve_name)  == 1 # && length(ddve.ddve_name) < 14
+      length(ddve.ddve_name)  == 1  && length(ddve.ddve_name) < 14
     ])
     error_message = "The Name length oh the ddve  must not exceed 15 chars"
   }
+    validation {
+    condition = anytrue([
+      for ddve in values(var.ddvelist):
+      ddve.ddve_version == "7.7.525"        ||
+      ddve.ddve_version == "7.7.530"        ||
+      ddve.ddve_version == "7.10.115"       ||
+      ddve.ddve_version == "7.10.120"       ||
+      ddve.ddve_version == "7.13.020"       ||
+      ddve.ddve_version == "8.0.010"        ||
+      ddve.ddve_version == "7.10.1015.MSDN" ||
+      ddve.ddve_version == "7.10.120.MSDN"  ||
+      ddve.ddve_version == "7.7.5020.MSDN"  ||
+      ddve.ddve_version == "7.7.530.MSDN"   ||
+      ddve.ddve_version == "7.13.0020.MSDN" ||
+      ddve.ddve_version == "8.0.010.MSDN"
+    ])
+    error_message = "Must be a valid DDVE Version, can be:  '7.7.525', '7.7.530', '7.10.115', '7.10.120', '7.13.020', '8.0.010', '7.10.1015.MSDN', '7.10.120.MSDN', '7.7.5020.MSDN', '7.13.0020.MSDN', '8.0.010.MSDN' ."
+  }
 }
+
+
 
 variable "ddve_version" {
   type        = string

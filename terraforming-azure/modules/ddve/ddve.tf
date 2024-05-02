@@ -161,7 +161,8 @@ resource "azurerm_storage_account" "ddve_diag_storage_account" {
   }
   tags = {
     vmname = var.ddve_instance
-    environment = var.deployment
+    environment = var.environment
+    deployment = var.deployment
     autodelete  = var.autodelete
   }
 }
@@ -180,7 +181,9 @@ resource "azurerm_storage_account" "ddve_atos" {
     virtual_network_subnet_ids = [var.subnet_id]
   }
   tags = {
-    environment = var.deployment
+    vmname = var.ddve_instance
+    environment = var.environment
+    deployment = var.deployment
     autodelete  = var.autodelete
   }
 }
@@ -207,37 +210,37 @@ resource "azurerm_marketplace_agreement" "ddve" {
 # VMs
 ## network interface
 resource "azurerm_network_interface" "ddve_nic1" {
-  name                = "${var.environment}-${var.ddve_instance}-nic1"
+  name                = "${var.ddve_instance}-nic1"
   location            = data.azurerm_resource_group.ddve_networks_resource_group.location
   resource_group_name = data.azurerm_resource_group.ddve_networks_resource_group.name
   ip_configuration {
     primary                       = "true"
-    name                          = "${var.environment}-${var.ddve_instance}-ip-config"
+    name                          = "${var.ddve_instance}-ip-config"
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = var.public_ip == "true" ? azurerm_public_ip.publicip.0.id : null
   }
 }
 resource "azurerm_network_interface" "ddve_nic2" {
-  name                = "${var.environment}-${var.ddve_instance}-nic2"
+  name                = "${var.ddve_instance}-nic2"
   location            = data.azurerm_resource_group.ddve_networks_resource_group.location
   resource_group_name = data.azurerm_resource_group.ddve_networks_resource_group.name
   ip_configuration {
-    name                          = "${var.environment}-${var.ddve_instance}-ip-config1"
+    name                          = "${var.ddve_instance}-ip-config1"
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Dynamic"
   }
 }
 resource "azurerm_public_ip" "publicip" {
   count               = var.public_ip == "true" ? 1 : 0
-  name                = "${var.environment}-${var.ddve_instance}-pip"
+  name                = "${var.ddve_instance}-pip"
   location            = var.location
   resource_group_name = data.azurerm_resource_group.ddve_networks_resource_group.name
   domain_name_label   = "ppdd-${random_string.fqdn_name.result}"
   allocation_method   = "Dynamic"
 }
 resource "azurerm_virtual_machine" "ddve" {
-  name                             = "${var.environment}-${var.ddve_instance}"
+  name                             = "${var.ddve_instance}"
   location                         = data.azurerm_resource_group.ddve_resource_group.location
   resource_group_name              = data.azurerm_resource_group.ddve_resource_group.name
   depends_on                       = [azurerm_network_interface.ddve_nic1, azurerm_network_interface.ddve_nic2, azurerm_network_interface_security_group_association.ddve_security_group_nic1, azurerm_network_interface_security_group_association.ddve_security_group_nic2]
@@ -306,6 +309,9 @@ resource "azurerm_virtual_machine" "ddve" {
   }
 
   tags = {
-    environment = var.deployment
-  }
+    vmname = var.ddve_instance
+    environment = var.environment
+    deployment = var.deployment
+    autodelete  = var.autodelete
+      }
 }

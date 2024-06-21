@@ -10,7 +10,7 @@ resource "google_compute_firewall" "windows-ingress" {
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "3389", "5986","7000-7009","7012-7020"]
+    ports    = ["22", "443", "3389", "5986","7000-7009","7012-7020"]
   }
   target_tags = concat(
     var.target_tags,

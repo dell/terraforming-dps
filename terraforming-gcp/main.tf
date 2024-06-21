@@ -131,6 +131,21 @@ module "ubuntu" {
   target_tags              = var.ubuntu_target_tags
   deletion_protection      = var.ubuntu_deletion_protection
 }
+module "windows" {
+  count                    = var.windows_count > 0 ? var.windows_count : 0
+  windows_instance          = count.index + 1
+  source                   = "./modules/windows"
+  labels                   = var.labels
+  environment              = var.ENV_NAME
+  depends_on               = [module.networks]
+  windows_name              = var.windows_HOSTNAME
+  instance_zone            = var.gcp_zone
+  instance_network_name    = var.gcp_network
+  instance_subnetwork_name = var.gcp_subnetwork_name_1
+  source_tags              = var.windows_source_tags
+  target_tags              = var.windows_target_tags
+  deletion_protection      = var.windows_deletion_protection
+}
 
 module "ddve_project_role" {
   count              = var.create_ddve_project_role ? 1 : 0 // terraform  >=0.13 only  

@@ -29,7 +29,7 @@ resource "google_compute_firewall" "windows-egress" {
   }
   allow {
     protocol = "tcp"
-    ports    = ["443"]
+    ports    = ["22", "3389", "5986","7000-7009","7012-7020"]
   }
   source_tags = var.source_tags
   target_tags = concat(

@@ -19,7 +19,7 @@ resource "google_compute_instance" "windows" {
     device_name = "windows-1"
 
     initialize_params {
-      image = "projects/windows-cloud/global/images/windows-server-2022-dc-v2024061"
+      image = "projects/windows-cloud/global/images/windows-server-2022-dc-v20240612"
       type  = "pd-balanced"
       size = 50
     }

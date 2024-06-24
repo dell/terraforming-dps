@@ -47,11 +47,11 @@ resource "google_container_cluster" "primary" {
   workload_identity_config {
     workload_pool = "${data.google_project.project.project_id}.svc.id.goog"
   }
-  addons_config {
-    gcs_fuse_csi_driver_config {
-      enabled = true
-    }
-  }
+#  addons_config {
+#    gcs_fuse_csi_driver_config {
+#      enabled = true
+#    }
+#  }
 
   lifecycle {
     # ignore changes to node_pool specifically so it doesn't

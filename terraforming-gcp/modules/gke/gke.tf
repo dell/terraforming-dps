@@ -4,6 +4,8 @@ data "google_compute_subnetwork" "subnet" {
   project = var.gcp_project
   region  = var.region
 }
+data "google_project" "project" {
+}
 resource "google_container_cluster" "primary" {
   provider = google #-beta
   name     = "${var.gcp_project}-gke"

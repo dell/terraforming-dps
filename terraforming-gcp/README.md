@@ -231,7 +231,7 @@ ansible-playbook ~/workspace/ansible_ppdd/1.0-Playbook-configure-initial-passwor
 ![image](https://user-images.githubusercontent.com/8255007/232750620-df339f28-bdac-4db2-984f-a2df1d14b38e.png)
 If you have a valid dd license, set the variable PPDD_LICENSE, example:
 ```bash
-export PPDD_LICENSE=$(cat ~/workspace/internal.lic)
+export PPDD_LICENSE=$(cat ~/workspace/license.xml)
 ansible-playbook ~/workspace/ansible_ppdd/3.0-Playbook-set-dd-license.yml
 ```
 
@@ -415,8 +415,8 @@ ssh -i ~/.ssh/ubuntu_key cloudadmin@${UBUNTU_PRIVATE_FQDN}
 ### Updating Versions only
 
 If branched from here you might only want to update version.
-The versions can be found from the Marketsplace default jinja file, e.g. DDVE:
-ddve.jinja
+The versions can be found from the Marketplace default jinja file on GCP , e.g. [DDVE](https://console.cloud.google.com/marketplace/product/dellemc-ddve-public/powerprotect-dd-virtual-edition) :  
+ ddve.jinja:
 ```jinja
       {% if ddveVersion == "8.1.0.10" %}
         {% set ddveImage = "ddve-gcp-8-1-0-10-1127744" %}

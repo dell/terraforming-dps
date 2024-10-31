@@ -46,8 +46,8 @@ No resources.
 | <a name="input_create_s2svpn"></a> [create\_s2svpn](#input\_create\_s2svpn) | Should a Side 2 Side VPN Gateway be deployed | `bool` | `false` | no |
 | <a name="input_ddve_count"></a> [ddve\_count](#input\_ddve\_count) | Do you want to create a DDVE | `number` | `0` | no |
 | <a name="input_ddve_disk_type"></a> [ddve\_disk\_type](#input\_ddve\_disk\_type) | DDVE Disk Type, can be: 'Performance Optimized', 'Cost Optimized' | `string` | `"Cost Optimized"` | no |
-| <a name="input_ddve_role_id"></a> [ddve\_role\_id](#input\_ddve\_role\_id) | id of the role fo DDVE used or be deployed | `string` | `"ddve_oauth_role"` | no |
-| <a name="input_ddve_sa_account_id"></a> [ddve\_sa\_account\_id](#input\_ddve\_sa\_account\_id) | The ID of the Service Account for DDVE IAM Policy to Access Storage Bucket via OAuth | `string` | `""` | no |
+| <a name="input_ddve_role_id"></a> [ddve\_role\_id](#input\_ddve\_role\_id) | id of the role fo DDVE used, format roles/{role}, organizations/{organization\_id}/roles/{role}, or projects/{project\_id}/roles/{role} when using existing roles, otherwise will be created for you | `string` | `"ddve_oauth_role"` | no |
+| <a name="input_ddve_sa_account_id"></a> [ddve\_sa\_account\_id](#input\_ddve\_sa\_account\_id) | The ID of the Service Account for DDVE IAM Policy to Access Storage Bucket via OAuth, in ther form of | `string` | `""` | no |
 | <a name="input_ddve_source_tags"></a> [ddve\_source\_tags](#input\_ddve\_source\_tags) | Source tags applied to Instance for Firewall Rules | `list(any)` | `[]` | no |
 | <a name="input_ddve_target_tags"></a> [ddve\_target\_tags](#input\_ddve\_target\_tags) | Target tags applied to Instance for Firewall Rules | `list(any)` | `[]` | no |
 | <a name="input_ddve_type"></a> [ddve\_type](#input\_ddve\_type) | DDVE Type, can be: '16 TB DDVE', '32 TB DDVE', '96 TB DDVE', '256 TB DDVE' | `string` | `"16 TB DDVE"` | no |
@@ -116,7 +116,6 @@ No resources.
 | <a name="output_windows_private_ip"></a> [windows\_private\_ip](#output\_windows\_private\_ip) | The private ip address for the DDVE Instance |
 | <a name="output_windows_ssh_private_key"></a> [windows\_ssh\_private\_key](#output\_windows\_ssh\_private\_key) | The ssh private key for the DDVE Instance |
 | <a name="output_windows_ssh_public_key"></a> [windows\_ssh\_public\_key](#output\_windows\_ssh\_public\_key) | The ssh public key for the DDVE Instance |
-
 ## Example Variables to be configured
 
 ```tfvars
@@ -131,8 +130,8 @@ create_networks                   = false
 create_s2svpn                     = false
 ddve_count                        = 0
 ddve_disk_type                    = "Cost Optimized"
-ddve_role_id                      = "ddve_oauth_role"
-ddve_sa_account_id                = ""
+ddve_role_id                      = "roles/ddve_oauth_role"
+ddve_sa_account_id                = "tfddve-sa"
 ddve_source_tags                  = []
 ddve_target_tags                  = []
 ddve_type                         = "16 TB DDVE"

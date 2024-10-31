@@ -25,6 +25,7 @@ Individual Modules will be called from main by evaluating  Variables
 | <a name="module_ppdm"></a> [ppdm](#module\_ppdm) | ./modules/ppdm | n/a |
 | <a name="module_s2svpn"></a> [s2svpn](#module\_s2svpn) | ./modules/s2svpn | n/a |
 | <a name="module_ubuntu"></a> [ubuntu](#module\_ubuntu) | ./modules/ubuntu | n/a |
+| <a name="module_windows"></a> [windows](#module\_windows) | ./modules/windows | n/a |
 
 ## Resources
 
@@ -50,7 +51,7 @@ No resources.
 | <a name="input_ddve_source_tags"></a> [ddve\_source\_tags](#input\_ddve\_source\_tags) | Source tags applied to Instance for Firewall Rules | `list(any)` | `[]` | no |
 | <a name="input_ddve_target_tags"></a> [ddve\_target\_tags](#input\_ddve\_target\_tags) | Target tags applied to Instance for Firewall Rules | `list(any)` | `[]` | no |
 | <a name="input_ddve_type"></a> [ddve\_type](#input\_ddve\_type) | DDVE Type, can be: '16 TB DDVE', '32 TB DDVE', '96 TB DDVE', '256 TB DDVE' | `string` | `"16 TB DDVE"` | no |
-| <a name="input_ddve_version"></a> [ddve\_version](#input\_ddve\_version) | DDVE Version, can be: '7.13.0.20', 'LTS2023 7.10.1.20', 'LTS2022 7.7.5.25' | `string` | `"7.13.0.20"` | no |
+| <a name="input_ddve_version"></a> [ddve\_version](#input\_ddve\_version) | DDVE Version, can be: 'LTS2022 7.7.5.50', 'LTS2023 7.10.1.40', 'LTS2024 7.13.1.05','8.1.0.10' | `string` | `"8.1.0.10"` | no |
 | <a name="input_gcp_network"></a> [gcp\_network](#input\_gcp\_network) | GCP Network to be used, change for youn own infra | `string` | `"default"` | no |
 | <a name="input_gcp_project"></a> [gcp\_project](#input\_gcp\_project) | the GCP Project do deploy resources | `any` | `null` | no |
 | <a name="input_gcp_region"></a> [gcp\_region](#input\_gcp\_region) | GCP Region to be used | `string` | `"europe-west3"` | no |
@@ -71,7 +72,7 @@ No resources.
 | <a name="input_ppdm_count"></a> [ppdm\_count](#input\_ppdm\_count) | Do you want to create a PPDM | `number` | `0` | no |
 | <a name="input_ppdm_source_tags"></a> [ppdm\_source\_tags](#input\_ppdm\_source\_tags) | Source tags applied to Instance for Firewall Rules | `list(any)` | `[]` | no |
 | <a name="input_ppdm_target_tags"></a> [ppdm\_target\_tags](#input\_ppdm\_target\_tags) | Target tags applied to Instance for Firewall Rules | `list(any)` | `[]` | no |
-| <a name="input_ppdm_version"></a> [ppdm\_version](#input\_ppdm\_version) | PPDM Version, can be: '19.11', '19.12', '19.13', '19.14', '19.15' | `string` | `"19.15"` | no |
+| <a name="input_ppdm_version"></a> [ppdm\_version](#input\_ppdm\_version) | PPDM Version, can be:  '19.16', '19.17' | `string` | `"19.17"` | no |
 | <a name="input_s2s_vpn_route_dest"></a> [s2s\_vpn\_route\_dest](#input\_s2s\_vpn\_route\_dest) | Routing Destination ( on Premises local networks ) for VPN | `list(string)` | <pre>[<br>  "127.0.0.1/32"<br>]</pre> | no |
 | <a name="input_ubuntu_HOSTNAME"></a> [ubuntu\_HOSTNAME](#input\_ubuntu\_HOSTNAME) | Hotname Prefix (adds counting number) of the ubuntu Machine | `string` | `"ubuntu-tf"` | no |
 | <a name="input_ubuntu_count"></a> [ubuntu\_count](#input\_ubuntu\_count) | Do you want to create a ubuntu | `number` | `0` | no |
@@ -80,6 +81,11 @@ No resources.
 | <a name="input_ubuntu_target_tags"></a> [ubuntu\_target\_tags](#input\_ubuntu\_target\_tags) | Target tags applied to Instance for Firewall Rules | `list(any)` | `[]` | no |
 | <a name="input_vpn_shared_secret"></a> [vpn\_shared\_secret](#input\_vpn\_shared\_secret) | Shared Secret for VPN Connection | `string` | `"topsecret12345"` | no |
 | <a name="input_vpn_wan_ip"></a> [vpn\_wan\_ip](#input\_vpn\_wan\_ip) | IP Adress of the Local VPN Gateway | `string` | `"0.0.0.0"` | no |
+| <a name="input_windows_HOSTNAME"></a> [windows\_HOSTNAME](#input\_windows\_HOSTNAME) | Hotname Prefix (adds counting number) of the windows Machine | `string` | `"windows-tf"` | no |
+| <a name="input_windows_count"></a> [windows\_count](#input\_windows\_count) | Do you want to create a windows | `number` | `0` | no |
+| <a name="input_windows_deletion_protection"></a> [windows\_deletion\_protection](#input\_windows\_deletion\_protection) | Protect windows from deletion | `bool` | `false` | no |
+| <a name="input_windows_source_tags"></a> [windows\_source\_tags](#input\_windows\_source\_tags) | Source tags applied to Instance for Firewall Rules | `list(any)` | `[]` | no |
+| <a name="input_windows_target_tags"></a> [windows\_target\_tags](#input\_windows\_target\_tags) | Target tags applied to Instance for Firewall Rules | `list(any)` | `[]` | no |
 
 ## Outputs
 
@@ -106,7 +112,10 @@ No resources.
 | <a name="output_ubuntu_ssh_private_key"></a> [ubuntu\_ssh\_private\_key](#output\_ubuntu\_ssh\_private\_key) | The ssh private key for the DDVE Instance |
 | <a name="output_ubuntu_ssh_public_key"></a> [ubuntu\_ssh\_public\_key](#output\_ubuntu\_ssh\_public\_key) | The ssh public key for the DDVE Instance |
 | <a name="output_vpn_ip"></a> [vpn\_ip](#output\_vpn\_ip) | n/a |
-| <a name="output_vpn_ip"></a> [vpn\_ip](#output\_vpn\_ip) | n/a |
+| <a name="output_windows_instance_id"></a> [windows\_instance\_id](#output\_windows\_instance\_id) | The instance id (initial password) for the DDVE Instance |
+| <a name="output_windows_private_ip"></a> [windows\_private\_ip](#output\_windows\_private\_ip) | The private ip address for the DDVE Instance |
+| <a name="output_windows_ssh_private_key"></a> [windows\_ssh\_private\_key](#output\_windows\_ssh\_private\_key) | The ssh private key for the DDVE Instance |
+| <a name="output_windows_ssh_public_key"></a> [windows\_ssh\_public\_key](#output\_windows\_ssh\_public\_key) | The ssh public key for the DDVE Instance |
 
 ## Example Variables to be configured
 
@@ -401,4 +410,61 @@ export UBUNTU_PRIVATE_FQDN=$(terraform output -raw ubuntu_private_ip)
 terraform output ubuntu_ssh_private_key > ~/.ssh/ubuntu_key
 chmod 0600 ~/.ssh/ubuntu_key
 ssh -i ~/.ssh/ubuntu_key cloudadmin@${UBUNTU_PRIVATE_FQDN}
+```
+
+
+### Updating Versions only
+
+If branched from here you might only want to update version.
+The versions can be found from the Marketsplace default jinja file, e.g. DDVE:
+ddve.jinja
+```jinja
+      {% if ddveVersion == "8.1.0.10" %}
+        {% set ddveImage = "ddve-gcp-8-1-0-10-1127744" %}
+      {% elif ddveVersion == "LTS2024 7.13.1.05" %}
+        {% set ddveImage = "ddve-gcp-7-13-1-05-1126976" %}
+      {% elif ddveVersion == "LTS2023 7.10.1.40" %}
+        {% set ddveImage = "ddve-gcp-7-10-1-40-1126469" %}
+      {% elif ddveVersion == "LTS2022 7.7.5.50" %}
+        {% set ddveImage = "ddve-gcp-7-7-5-50-1129444" %}
+      {% endif %}
+```      
+
+The code will always be maintained in  ./modules/ddve/ddve.tf:
+```terraform
+  ddve_image = {
+    "8.1.0.10" = {
+      projectId = "dellemc-ddve-public"
+      imageName = "ddve-gcp-8-1-0-10-1127744"
+    }    
+    "LTS2024 7.13.1.05" = {
+      projectId = "dellemc-ddve-public"
+      imageName = "ddve-gcp-7-13-1-05-1126976"
+    }    
+    "LTS2023 7.10.1.40" = {
+      projectId = "dellemc-ddve-public"
+      imageName = "dddve-gcp-7-10-1-40-1126469"
+    }
+    "LTS2022 7.7.5.50" = {
+      projectId = "dellemc-ddve-public"
+      imageName = "ddve-gcp-7-7-5-50-1129444"
+    }
+  }
+```
+And in ./ddve_variables.tf:
+```terraform
+variable "ddve_version" {
+  type        = string
+  default     = "8.1.0.10"
+  description = "DDVE Version, can be: 'LTS2022 7.7.5.50', 'LTS2023 7.10.1.40', 'LTS2024 7.13.1.05','8.1.0.10' " 
+  validation {
+    condition = anytrue([
+      var.ddve_version == "LTS2022 7.7.5.50",
+      var.ddve_version == "LTS2023 7.10.1.40",
+      var.ddve_version == "LTS2024 7.13.1.05",
+      var.ddve_version == "8.1.0.10",
+    ])
+    error_message = "Must be a valid DDVE Version, can be: 'LTS2022 7.7.5.50', 'LTS2023 7.10.1.40', 'LTS2024 7.13.1.05','8.1.0.10' ."
+  }
+}
 ```

@@ -1,10 +1,10 @@
 
 locals {
   ppdm_image = {
-    "19.15" = {
+    "19.17" = {
       projectId    = "dellemc-ddve-public"
       imageSKU     = "powerprotect"
-      imageVersion = "19-15-0-17"
+      imageVersion = "19-17-0-10"
     }
     "19.16" = {
       projectId    = "dellemc-ddve-public"

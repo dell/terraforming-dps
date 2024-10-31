@@ -12,16 +12,16 @@ variable "DDVE_HOSTNAME" {
 
 variable "ddve_version" {
   type        = string
-  default     = "8.0.0.10"
-  description = "DDVE Version, can be: 'LTS2022 7.7.5.30', 'LTS2023 7.10.1.30', 'LTS2024 7.13.1.0','8.0.0.10' " 
+  default     = "8.1.0.10"
+  description = "DDVE Version, can be: 'LTS2022 7.7.5.50', 'LTS2023 7.10.1.40', 'LTS2024 7.13.1.05','8.1.0.10' " 
   validation {
     condition = anytrue([
-      var.ddve_version == "LTS2022 7.7.5.30",
-      var.ddve_version == "LTS2023 7.10.1.30",
-      var.ddve_version == "LTS2024 7.13.1.0",
-      var.ddve_version == "8.0.0.10",
+      var.ddve_version == "LTS2022 7.7.5.50",
+      var.ddve_version == "LTS2023 7.10.1.40",
+      var.ddve_version == "LTS2024 7.13.1.05",
+      var.ddve_version == "8.1.0.10",
     ])
-    error_message = "Must be a valid DDVE Version, can be: 'LTS2022 7.7.5.30', 'LTS2023 7.10.1.30', 'LTS2024 7.13.1.0','8.0.0.10' ."
+    error_message = "Must be a valid DDVE Version, can be: 'LTS2022 7.7.5.50', 'LTS2023 7.10.1.40', 'LTS2024 7.13.1.05','8.1.0.10' ."
   }
 }
 

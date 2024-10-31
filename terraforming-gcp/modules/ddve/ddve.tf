@@ -31,21 +31,21 @@ locals {
 
   }
   ddve_image = {
-    "8.0.0.10" = {
+    "8.1.0.10" = {
       projectId = "dellemc-ddve-public"
-      imageName = "ddve-gcp-8-0-0-10-1097914"
+      imageName = "ddve-gcp-8-1-0-10-1127744"
     }    
-    "LTS2024 7.13.1.0" = {
+    "LTS2024 7.13.1.05" = {
       projectId = "dellemc-ddve-public"
-      imageName = "ddve-gcp-7-13-1-0-1107703"
+      imageName = "ddve-gcp-7-13-1-05-1126976"
     }    
-    "LTS2023 7.10.1.30" = {
+    "LTS2023 7.10.1.40" = {
       projectId = "dellemc-ddve-public"
-      imageName = "ddve-gcp-7-10-1-30-1105324"
+      imageName = "dddve-gcp-7-10-1-40-1126469"
     }
-    "LTS2022 7.7.5.30" = {
+    "LTS2022 7.7.5.50" = {
       projectId = "dellemc-ddve-public"
-      imageName = "ddve-gcp-7-7-5-30-1091295"
+      imageName = "ddve-gcp-7-7-5-50-1129444"
     }
   }
   ddve_name = "${var.ddve_name}-${var.ddve_instance}"

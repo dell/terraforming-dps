@@ -27,7 +27,7 @@ variable "create_ddve_project_role" {
 variable "ddve_role_id" {
   default     = "ddve_oauth_role"
   type        = string
-  description = "id of the role fo DDVE used or be deployed"
+  description = "id of the role fo DDVE used, format roles/{role}, organizations/{organization_id}/roles/{role}, or projects/{project_id}/roles/{role} when using existing roles, otherwise will be created for you"
 }
 
 // routable S2S Target (you location) addresses 

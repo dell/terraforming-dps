@@ -54,7 +54,7 @@ variable "ddve_target_tags" {
 
 }
 variable "ddve_sa_account_id" {
-  description = "The ID of the Service Account for DDVE IAM Policy to Access Storage Bucket via OAuth"
+  description = "The ID of the Service Account for DDVE IAM Policy to Access Storage Bucket via OAuth, in ther form of"
 
   default = ""
 }

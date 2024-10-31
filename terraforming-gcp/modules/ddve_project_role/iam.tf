@@ -1,5 +1,5 @@
 resource "google_project_iam_custom_role" "ddve-role" {
-  role_id     = var.ddve_role_id
+  role_id     = basename(var.ddve_role_id)
   title       = "DDVE Role"
   description = "Oauth Role for Accessing Object Store"
   permissions = [

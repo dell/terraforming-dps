@@ -347,7 +347,7 @@ EOF
 source ./dd_env.sh
 MTREE=/data/col1/vault_updates
 ssh ${SSH_EXEC} "replication add source mtree://${SOURCE_DD_NAME}${MTREE} destination mtree://${VAULT_DD_NAME}${MTREE}_repl"
-ssh ${SSH_EXEC} "replication modify  mtree://${VAULT_DD_NAME}${MTREE}_repl connection-host awsvault-ethv1 port 2051"
+ssh ${SSH_EXEC} "replication modify  mtree://${VAULT_DD_NAME}${MTREE}_repl connection-host ${CONNECTION_HOST} port 2051"
 ssh ${SSH_EXEC} "replication initialize mtree://${VAULT_DD_NAME}${MTREE}_repl"
 ssh ${SSH_EXEC} "replication watch mtree://${VAULT_DD_NAME}${MTREE}_repl"
 ```
@@ -359,7 +359,7 @@ MTREE=/data/col1/fs_demo-ppdm-45b20
 MTREE=/data/col1/win_test-ppdm-22335
 MTREE=/data/col1/SysDR_ppdm-demo
 ssh ${SSH_EXEC} "replication add source mtree://${SOURCE_DD_NAME}${MTREE} destination mtree://${VAULT_DD_NAME}${MTREE}_repl"
-ssh ${SSH_EXEC} "replication modify  mtree://${VAULT_DD_NAME}${MTREE}_repl connection-host awsvault-ethv1 port 2051"
+ssh ${SSH_EXEC} "replication modify  mtree://${VAULT_DD_NAME}${MTREE}_repl connection-host ${CONNECTION_HOST} port 2051"
 ssh ${SSH_EXEC} "replication initialize mtree://${VAULT_DD_NAME}${MTREE}_repl"
 ssh ${SSH_EXEC} "replication watch mtree://${VAULT_DD_NAME}${MTREE}_repl"
 

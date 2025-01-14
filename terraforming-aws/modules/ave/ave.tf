@@ -35,7 +35,8 @@ locals {
 
 }
 data "aws_ami" "ave" {
-  // most_recent = true
+  include_deprecated = true
+  most_recent = true
   filter {
     //name   = "product-code"
     //values = ["39wcpm1kbvedt019kmd2u3r2x"]

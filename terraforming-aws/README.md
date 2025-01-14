@@ -10,7 +10,7 @@ Individual Modules will be called from main by evaluating  Variables
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.14.9 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.34.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.1 |
 | <a name="requirement_tls"></a> [tls](#requirement\_tls) | ~> 3.1 |
 
@@ -76,10 +76,10 @@ No resources.
 | <a name="input_crs_wan_ip"></a> [crs\_wan\_ip](#input\_crs\_wan\_ip) | The IP of your VPN Device if S2S VPN | `any` | n/a | yes |
 | <a name="input_ddmc_count"></a> [ddmc\_count](#input\_ddmc\_count) | Do you want to create a DDMC | `number` | `0` | no |
 | <a name="input_ddmc_type"></a> [ddmc\_type](#input\_ddmc\_type) | DDMC Type, can be: '12.5 Gigabit Ethernet DDMC', '10 Gigabit Ethernet DDMC' | `string` | `"12.5 Gigabit Ethernet DDMC"` | no |
-| <a name="input_ddmc_version"></a> [ddmc\_version](#input\_ddmc\_version) | DDMC Version, can be: '7.13.0.10', '7.12.0.0', '7.10.1.20', '7.7.5.30','7.7.5.25' | `string` | `"7.13.0.10"` | no |
+| <a name="input_ddmc_version"></a> [ddmc\_version](#input\_ddmc\_version) | DDMC Version, can be: '8.1.0.10', '7.13.1.10', '7.12.0.0', '7.10.1.50', '7.7.5.50' | `string` | `"8.1.0.10"` | no |
 | <a name="input_ddve_count"></a> [ddve\_count](#input\_ddve\_count) | Do you want to create a DDVE | `number` | `0` | no |
 | <a name="input_ddve_type"></a> [ddve\_type](#input\_ddve\_type) | DDVE Type, can be: '16 TB DDVE', '32 TB DDVE', '96 TB DDVE', '256 TB DDVE' | `string` | `"16 TB DDVE"` | no |
-| <a name="input_ddve_version"></a> [ddve\_version](#input\_ddve\_version) | DDVE Version, can be: '7.13.0.20','7.10.1.20', '7.7.5.30' | `string` | `"7.13.0.20"` | no |
+| <a name="input_ddve_version"></a> [ddve\_version](#input\_ddve\_version) | DDVE Version, can be: '8.1.0.10', '7.13.1.10','7.10.1.50', '7.7.5.50' | `string` | `"8.1.0.10"` | no |
 | <a name="input_default_sg_id"></a> [default\_sg\_id](#input\_default\_sg\_id) | id of default security group when using existing networks | `any` | `null` | no |
 | <a name="input_eks_cluster_name"></a> [eks\_cluster\_name](#input\_eks\_cluster\_name) | the name ( prefix ) of the eks cluster | `string` | `"tfeks"` | no |
 | <a name="input_eks_count"></a> [eks\_count](#input\_eks\_count) | the cout of eks clusters | `number` | `0` | no |
@@ -89,7 +89,7 @@ No resources.
 | <a name="input_nve_type"></a> [nve\_type](#input\_nve\_type) | nve Type, can be 'small','medium','large' | `string` | `"small"` | no |
 | <a name="input_nve_version"></a> [nve\_version](#input\_nve\_version) | nve Version, can be '19.10.0.1', '19.9.0.0' | `string` | `"19.10.0.1"` | no |
 | <a name="input_ppdm_count"></a> [ppdm\_count](#input\_ppdm\_count) | Do you want to create an PPDM | `number` | `0` | no |
-| <a name="input_ppdm_version"></a> [ppdm\_version](#input\_ppdm\_version) | VERSION Version, can be: '19.14.0', '19.15.0', '19.16.0' | `string` | `"19.16.0"` | no |
+| <a name="input_ppdm_version"></a> [ppdm\_version](#input\_ppdm\_version) | VERSION Version, can be: '19.18.0', '19.17.0' | `string` | `"19.18.0"` | no |
 | <a name="input_private_route_table"></a> [private\_route\_table](#input\_private\_route\_table) | Private Routing table for S2S VPN | `string` | `""` | no |
 | <a name="input_private_subnets_cidr"></a> [private\_subnets\_cidr](#input\_private\_subnets\_cidr) | cidr of the private subnets cidrs when creating the vpc | `list(any)` | n/a | yes |
 | <a name="input_public_subnets_cidr"></a> [public\_subnets\_cidr](#input\_public\_subnets\_cidr) | cidr of the public subnets cidrs when creating the vpc. Public Cidr´(s) are most likely used for Bastion´s | `list(any)` | n/a | yes |
@@ -177,7 +177,6 @@ Also, when set to false, required ID´s like vpc, default sg´s or subnet, must 
 
 ```hcl
 AVE_HOSTNAME                    = "ave_terraform"
-AVE_HOSTNAME                    = "ave_terraform"
 BASTION_HOSTNAME                = "bastion_terraform"
 DDMC_HOSTNAME                   = "ddmc_terraform"
 DDVE_HOSTNAME                   = "ddve_terraform"
@@ -210,10 +209,10 @@ crs_vpn_destination_cidr_blocks = "[]"
 crs_wan_ip                      = ""
 ddmc_count                      = 0
 ddmc_type                       = "12.5 Gigabit Ethernet DDMC"
-ddmc_version                    = "7.13.0.10"
+ddmc_version                    = "8.1.0.10"
 ddve_count                      = 0
 ddve_type                       = "16 TB DDVE"
-ddve_version                    = "7.13.0.20"
+ddve_version                    = "8.1.0.10"
 default_sg_id                   = ""
 eks_cluster_name                = "tfeks"
 eks_count                       = 0
@@ -225,7 +224,7 @@ nve_count                   = 0
 nve_type                    = "small"
 nve_version                 = "19.10.0.1"
 ppdm_count                  = 0
-ppdm_version                = "19.16.0"
+ppdm_version                = "19.18.0"
 private_route_table         = ""
 private_subnets_cidr        = ""
 public_subnets_cidr         = ""

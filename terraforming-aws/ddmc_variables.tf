@@ -12,17 +12,17 @@ variable "DDMC_HOSTNAME" {
 
 variable "ddmc_version" {
   type        = string
-  default     = "7.13.0.10"
-  description = "DDMC Version, can be: '7.13.0.10', '7.12.0.0', '7.10.1.20', '7.7.5.30','7.7.5.25'"
+  default     = "8.1.0.10"
+  description = "DDMC Version, can be: '8.1.0.10', '7.13.1.10', '7.12.0.0', '7.10.1.50', '7.7.5.50'"
   validation {
     condition = anytrue([
-      var.ddmc_version == "7.13.0.10",
+      var.ddmc_version == "8.1.0.10",
+      var.ddmc_version == "7.13.1.10",
       var.ddmc_version == "7.12.0.0",
-      var.ddmc_version == "7.10.1.20",
-      var.ddmc_version == "7.7.5.30",
-      var.ddmc_version == "7.7.5.25"
+      var.ddmc_version == "7.10.1.50",
+      var.ddmc_version == "7.7.5.50",
     ])
-    error_message = "Must be a valid DDMC Version, can be: '7.13.0.10', '7.12.0.0', '7.10.1.20', '7.7.5.30','7.7.5.25' ."
+    error_message = "Must be a valid DDMC Version, can be: '8.1.0.10', '7.13.1.10', '7.12.0.0', '7.10.1.50', '7.7.5.50' ."
   }
 }
 

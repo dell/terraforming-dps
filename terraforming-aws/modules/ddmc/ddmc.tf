@@ -1,10 +1,10 @@
 locals {
   ddmc_size = {
-    "10 Gigabit Ethernet ddmc" = {
+    "10 Gigabit Ethernet DDMC" = {
       ddmc_metadata_volume_count = 2
       instance_type              = "m5.xlarge"
     }
-    "12.5 Gigabit Ethernet ddmc" = {
+    "12.5 Gigabit Ethernet DDMC" = {
       ddmc_metadata_volume_count = 4
       instance_type              = "m6i.xlarge"
     }

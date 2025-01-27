@@ -45,13 +45,21 @@ variable "ddvelist" {
     ddve_type       = string
     ddve_version    = string
   }))
-  description = "map describing each individual DDVE configuration"
+  description = <<EOT
+map describing each individual DDVE configuration, must contain correct version  '7.10.1030', '7.10.1040', '7.10.1050', '7.13.100', '7.13.1010', '7.7.5040', '7.7.5050','8.1.000', '8.1.0010', '7.10.1030.MSDN', '7.10.1040.MSDN', '7.10.1050.MSDN', '7.13.100.MSDN', '7.13.1010.MSDN', '7.7.5040.MSDN', '7.7.5050.MSDN','8.1.0010.MSDN' .
+    firstdd = {
+      ddve_name       = "ddve1"
+      ddve_meta_disks = [1000, 1000]
+      ddve_type       = "16 TB DDVE"
+      ddve_version    = "8.1.0010.MSDN"
+    }
+EOT  
   default = {
     firstdd = {
       ddve_name       = "ddve1"
       ddve_meta_disks = [1000, 1000]
       ddve_type       = "16 TB DDVE"
-      ddve_version    = "8.0.010.MSDN"
+      ddve_version    = "8.1.0010.MSDN"
     }
   }
   validation {
@@ -63,9 +71,9 @@ variable "ddvelist" {
   }
   validation {
     condition = alltrue([
-      for ddve in values(var.ddvelist) : contains(["7.7.525", "7.7.530", "7.10.115", "7.10.120", "7.13.020", "8.0.010", "7.10.1015.MSDN", "7.10.120.MSDN", "7.7.5020.MSDN", "7.13.0020.MSDN", "8.0.010.MSDN"], ddve.ddve_version)
+      for ddve in values(var.ddvelist) : contains(["7.10.1030", "7.10.1040", "7.10.1050", "7.13.100", "7.13.1010", "7.7.5040", "7.7.5050","8.1.000", "8.1.0010", "7.10.1030.MSDN", "7.10.1040.MSDN", "7.10.1050.MSDN", "7.13.100.MSDN", "7.13.1010.MSDN", "7.7.5040.MSDN", "7.7.5050.MSDN","8.1.0010.MSDN"], ddve.ddve_version)
     ])
-    error_message = "Must be a valid DDVE Version, can be:  '7.7.525', '7.7.530', '7.10.115', '7.10.120', '7.13.020', '8.0.010', '7.10.1015.MSDN', '7.10.120.MSDN', '7.7.5020.MSDN', '7.13.0020.MSDN', '8.0.010.MSDN' ."
+    error_message = "Must be a valid DDVE Version, can be:  '7.10.1030', '7.10.1040', '7.10.1050', '7.13.100', '7.13.1010', '7.7.5040', '7.7.5050','8.1.000', '8.1.0010', '7.10.1030.MSDN', '7.10.1040.MSDN', '7.10.1050.MSDN', '7.13.100.MSDN', '7.13.1010.MSDN', '7.7.5040.MSDN', '7.7.5050.MSDN','8.1.0010.MSDN' ."
   }
   validation {
     condition = alltrue([

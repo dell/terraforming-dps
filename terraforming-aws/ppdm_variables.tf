@@ -22,6 +22,6 @@ variable "ppdm_version" {
       var.ppdm_version == "19.17.0",
 
     ])
-    error_message = "Must be a valid DDVE Version, can be: '19.18.0', '19.17.0', ."
+    error_message = "Must be a valid PPDM Version, can be: '19.18.0', '19.17.0', ."
   }
 }

@@ -5,19 +5,19 @@ locals {
       offer     = "ppdm_0_0_1"
       sku       = "powerprotect-data-manager-19-16-0-11"
       version   = "19.16.0"
-    }      
-    "19.15.0" = {
+    }
+    "19.17.0" = {
       publisher = "dellemc"
       offer     = "ppdm_0_0_1"
-      sku       = "powerprotect-data-manager-19-15-0-17"
+      sku       = "powerprotect-data-manager-19-17-0-11"
       version   = "19.15.0"
-    }    
-    "19.14.0" = {
+    }
+    "19.18.0" = {
       publisher = "dellemc"
       offer     = "ppdm_0_0_1"
-      sku       = "powerprotect-data-manager-19-14-0-20"
-      version   = "19.14.0"
-    }    
+      sku       = "powerprotect-data-manager-19-18-0-14"
+      version   = "19.8.0"
+    }
   }
   ppdm_vm_size       = "Standard_D8s_v3"
   ppdm_name          = "${var.ppdm_name}${var.ppdm_instance}"
@@ -55,16 +55,16 @@ resource "tls_private_key" "ppdm" {
 }
 
 resource "azurerm_storage_account" "ppdm_diag_storage_account" {
-  name                     = random_string.ppdm_diag_storage_account_name.result
-  resource_group_name      = data.azurerm_resource_group.ppdm_resource_group.name
-  location                 = data.azurerm_resource_group.ppdm_resource_group.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-  min_tls_version = "TLS1_2"
-  enable_https_traffic_only = true
+  name                      = random_string.ppdm_diag_storage_account_name.result
+  resource_group_name       = data.azurerm_resource_group.ppdm_resource_group.name
+  location                  = data.azurerm_resource_group.ppdm_resource_group.location
+  account_tier              = "Standard"
+  account_replication_type  = "LRS"
+  min_tls_version           = "TLS1_2"
+  https_traffic_only_enabled  = true
   network_rules {
     default_action             = "Deny"
-    ip_rules = [chomp(data.http.myip.response_body)]
+    ip_rules                   = [chomp(data.http.myip.response_body)]
     virtual_network_subnet_ids = [var.subnet_id]
   }
   tags = {
@@ -74,7 +74,7 @@ resource "azurerm_storage_account" "ppdm_diag_storage_account" {
 }
 
 resource "azurerm_marketplace_agreement" "ppdm" {
-  count = var.ppdm_instance == 1 ? 1 : 0
+  count     = var.ppdm_instance == 1 ? 1 : 0
   publisher = local.ppdm_image[var.ppdm_version]["publisher"]
   offer     = local.ppdm_image[var.ppdm_version]["offer"]
   plan      = local.ppdm_image[var.ppdm_version]["sku"]
@@ -87,8 +87,8 @@ resource "azurerm_marketplace_agreement" "ppdm" {
 ## network interface
 resource "azurerm_network_interface" "ppdm_nic" {
   name                = "${var.environment}-${local.ppdm_name}-nic"
-  resource_group_name      = data.azurerm_resource_group.ppdm_networks_resource_group.name
-  location                 = data.azurerm_resource_group.ppdm_networks_resource_group.location
+  resource_group_name = data.azurerm_resource_group.ppdm_networks_resource_group.name
+  location            = data.azurerm_resource_group.ppdm_networks_resource_group.location
   ip_configuration {
     name                          = "${var.environment}-${local.ppdm_name}-ip-config"
     subnet_id                     = var.subnet_id
@@ -99,8 +99,8 @@ resource "azurerm_network_interface" "ppdm_nic" {
 resource "azurerm_public_ip" "publicip" {
   count               = var.public_ip == "true" ? 1 : 0
   name                = "${var.environment}-${local.ppdm_name}-pip"
-  resource_group_name      = data.azurerm_resource_group.ppdm_networks_resource_group.name
-  location                 = data.azurerm_resource_group.ppdm_networks_resource_group.location
+  resource_group_name = data.azurerm_resource_group.ppdm_networks_resource_group.name
+  location            = data.azurerm_resource_group.ppdm_networks_resource_group.location
   allocation_method   = "Dynamic"
   domain_name_label   = "ppdm-${random_string.fqdn_name.result}"
 }

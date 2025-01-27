@@ -34,80 +34,114 @@ locals {
     }
   }
   ddve_image = {
-    "7.13.0020.MSDN" = {
+
+  #  'MSN Deployable'
+    "7.10.1030.MSDN" = {
+      publisher = "dellemc"
+      offer     = "dell-emc-datadomain-virtual-edition-v4"
+      sku       = "ddve-710115"
+      version   = "7.10.1030"
+    }
+    "7.10.1040.MSDN" = {
+      publisher = "dellemc"
+      offer     = "dell-emc-datadomain-virtual-edition-v4"
+      sku       = "ddve-710115"
+      version   = "7.10.1040"
+    } 
+    "7.10.1050.MSDN" = {
+      publisher = "dellemc"
+      offer     = "dell-emc-datadomain-virtual-edition-v4"
+      sku       = "ddve-710115"
+      version   = "7.10.1050"
+    }       
+    "7.13.100.MSDN" = {
       publisher = "dellemc"
       offer     = "dell-emc-datadomain-virtual-edition-v4"
       sku       = "ddve-713"
-      version   = "7.13.0020"
+      version   = "7.13.100"
     }
-    "7.10.120.MSDN" = {
+    "7.13.1010.MSDN" = {
       publisher = "dellemc"
       offer     = "dell-emc-datadomain-virtual-edition-v4"
-      sku       = "ddve-710115"
-      version   = "7.10.120"
+      sku       = "ddve-713"
+      version   = "7.13.1010"
     }
-    "7.10.1015.MSDN" = {
-      publisher = "dellemc"
-      offer     = "dell-emc-datadomain-virtual-edition-v4"
-      sku       = "ddve-710115"
-      version   = "7.10.1015"
-    }
-    "7.7.5025.MSDN" = {
+    "7.7.5040.MSDN" = {
       publisher = "dellemc"
       offer     = "dell-emc-datadomain-virtual-edition-v4"
       sku       = "ddve-77525"
-      version   = "7.7.5025"
+      version   = "7.7.5040"
     }
-    "7.7.5030.MSDN" = {
+    "7.7.5050.MSDN" = {
       publisher = "dellemc"
       offer     = "dell-emc-datadomain-virtual-edition-v4"
       sku       = "ddve-77525"
-      version   = "7.7.530"
+      version   = "7.7.5050"
     }    
-    "8.0.010.MSDN" = {
+    "8.1.0010.MSDN" = {
       publisher = "dellemc"
       offer     = "dell-emc-datadomain-virtual-edition-v4"
-      sku       = "ddve-80"
-      version   = "8.0.010"
-    }   
+      sku       = "ddve-81"
+      version   = "8.1.0010"
+    }  
+
     # Branded Image SKU´s
 
-    "7.13.020" = {
+
+    "7.10.1030" = {
+      publisher = "dellemc"
+      offer     = "dell-emc-datadomain-virtual-edition-v4"
+      sku       = "ddve"
+      version   = "7.10.1030"
+    }
+    "7.10.1040" = {
+      publisher = "dellemc"
+      offer     = "dell-emc-datadomain-virtual-edition-v4"
+      sku       = "ddve"
+      version   = "7.10.1040"
+    }
+    "7.10.1050" = {
+      publisher = "dellemc"
+      offer     = "dell-emc-datadomain-virtual-edition-v4"
+      sku       = "ddve"
+      version   = "7.10.1050"
+    } 
+    "7.13.100" = {
+      publisher = "dellemc"
+      offer     = "dell-emc-datadomain-virtual-edition-v4"
+      sku       = "ddve"
+      version   = "7.13.100"
+    }
+    "7.13.1010" = {
       publisher = "dellemc"
       offer     = "dell-emc-datadomain-virtual-edition-v4"
       sku       = "ddve"
       version   = "7.13.020"
-    }
-    "7.10.120" = {
+    }       
+    "7.7.5040" = {
       publisher = "dellemc"
       offer     = "dell-emc-datadomain-virtual-edition-v4"
       sku       = "ddve"
-      version   = "7.10.120"
+      version   = "7.7.5040"
     }
-    "7.10.115" = {
+    "7.7.5050" = {
       publisher = "dellemc"
       offer     = "dell-emc-datadomain-virtual-edition-v4"
       sku       = "ddve"
-      version   = "7.10.115"
+      version   = "7.7.5050"
     }
-    "7.7.525" = {
+    "8.1.000" = {
       publisher = "dellemc"
       offer     = "dell-emc-datadomain-virtual-edition-v4"
       sku       = "ddve"
-      version   = "7.7.525"
+      version   = "8.1.000"
     }
-    "7.7.530" = {
+    "8.1.0010" = {
       publisher = "dellemc"
       offer     = "dell-emc-datadomain-virtual-edition-v4"
       sku       = "ddve"
-      version   = "7.7.530"
-    }
-    "8.0.010" = {
-      publisher = "dellemc"
-      offer     = "dell-emc-datadomain-virtual-edition-v4"
-      sku       = "ddve"
-      version   = "8.0.010"
-    }
+      version   = "8.1.0010"
+    }    
   }
 
 }
@@ -153,7 +187,7 @@ resource "azurerm_storage_account" "ddve_diag_storage_account" {
   account_tier              = "Standard"
   account_replication_type  = "LRS"
   min_tls_version           = "TLS1_2"
-  enable_https_traffic_only = true
+  https_traffic_only_enabled = true
   network_rules {
     default_action             = "Deny"
     ip_rules                   = [chomp(data.http.myip.response_body)]
@@ -174,7 +208,7 @@ resource "azurerm_storage_account" "ddve_atos" {
   account_tier              = "Standard"
   account_replication_type  = "LRS"
   min_tls_version           = "TLS1_2"
-  enable_https_traffic_only = true
+  https_traffic_only_enabled = true
   network_rules {
     default_action             = "Deny"
     ip_rules                   = [chomp(data.http.myip.response_body)]

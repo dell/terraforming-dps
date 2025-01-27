@@ -7,7 +7,7 @@ terrafroming-azure is a set of terraform modules to deploy Dell DPS Products to 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.15.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 2.94 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.14 |
 | <a name="requirement_http"></a> [http](#requirement\_http) | ~> 3.4.2 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.1 |
 | <a name="requirement_tls"></a> [tls](#requirement\_tls) | ~> 3.1 |
@@ -57,7 +57,7 @@ No resources.
 | <a name="input_client_id"></a> [client\_id](#input\_client\_id) | n/a | `any` | `null` | no |
 | <a name="input_client_secret"></a> [client\_secret](#input\_client\_secret) | n/a | `any` | `null` | no |
 | <a name="input_common_location"></a> [common\_location](#input\_common\_location) | Name of a common resource group location for all but network resources | `any` | `null` | no |
-| <a name="input_common_resource_group_name"></a> [common\_resource\_group\_name](#input\_common\_resource\_group\_name) | Name of a common resorce group for all but network resources | `any` | n/a | yes |
+| <a name="input_common_resource_group_name"></a> [common\_resource\_group\_name](#input\_common\_resource\_group\_name) | Name of a common resorce group for all but network resources | `any` | `null` | no |
 | <a name="input_create_bastion"></a> [create\_bastion](#input\_create\_bastion) | n/a | `bool` | `false` | no |
 | <a name="input_create_common_rg"></a> [create\_common\_rg](#input\_create\_common\_rg) | Create a common RG | `bool` | `false` | no |
 | <a name="input_create_crs_s2s_vpn"></a> [create\_crs\_s2s\_vpn](#input\_create\_crs\_s2s\_vpn) | Do you want to create a Cyber Vault | `bool` | `false` | no |
@@ -77,9 +77,7 @@ No resources.
 | <a name="input_ddve_public_ip"></a> [ddve\_public\_ip](#input\_ddve\_public\_ip) | Enable Public IP on Datadomain Network Interface | `string` | `"false"` | no |
 | <a name="input_ddve_resource_group_name"></a> [ddve\_resource\_group\_name](#input\_ddve\_resource\_group\_name) | Bring your own resourcegroup. the Code will read the Data from the resourcegroup name specified here | `string` | `null` | no |
 | <a name="input_ddve_tcp_inbound_rules_Inet"></a> [ddve\_tcp\_inbound\_rules\_Inet](#input\_ddve\_tcp\_inbound\_rules\_Inet) | inbound Traffic rule for Security Group from Internet | `list(string)` | <pre>[<br>  "22",<br>  "443"<br>]</pre> | no |
-| <a name="input_ddve_type"></a> [ddve\_type](#input\_ddve\_type) | DDVE Type, can be: '16 TB DDVE', '32 TB DDVE', '96 TB DDVE', '256 TB DDVE','16 TB DDVE PERF', '32 TB DDVE PERF', '96 TB DDVE PERF', '256 TB DDVE PERF' | `string` | `"16 TB DDVE"` | no |
-| <a name="input_ddve_version"></a> [ddve\_version](#input\_ddve\_version) | DDVE Version, can be: '7.7.525', '7.7.530', '7.10.115', '7.10.120', '7.13.020', '8.0.010', '7.10.1015.MSDN', '7.10.120.MSDN', '7.7.5020.MSDN', '7.13.0020.MSDN', '8.0.010.MSDN' | `string` | `"8.0.010.MSDN"` | no |
-| <a name="input_ddvelist"></a> [ddvelist](#input\_ddvelist) | n/a | <pre>map(object({<br>    ddve_name       = string<br>    ddve_meta_disks = list(string)<br>    ddve_type       = string<br>    ddve_version    = string<br>  }))</pre> | <pre>{<br>  "firstdd": {<br>    "ddve_meta_disks": [<br>      1000,<br>      1000<br>    ],<br>    "ddve_name": "ddve1",<br>    "ddve_type": "16 TB DDVE",<br>    "ddve_version": "8.0.010.MSDN"<br>  }<br>}</pre> | no |
+| <a name="input_ddvelist"></a> [ddvelist](#input\_ddvelist) | map describing each individual DDVE configuration, must contain correct version  '7.10.1030', '7.10.1040', '7.10.1050', '7.13.100', '7.13.1010', '7.7.5040', '7.7.5050','8.1.000', '8.1.0010', '7.10.1030.MSDN', '7.10.1040.MSDN', '7.10.1050.MSDN', '7.13.100.MSDN', '7.13.1010.MSDN', '7.7.5040.MSDN', '7.7.5050.MSDN','8.1.0010.MSDN' .<br>    firstdd = {<br>      ddve\_name       = "ddve1"<br>      ddve\_meta\_disks = [1000, 1000]<br>      ddve\_type       = "16 TB DDVE"<br>      ddve\_version    = "8.1.0010.MSDN"<br>    } | <pre>map(object({<br>    ddve_name       = string<br>    ddve_meta_disks = list(string)<br>    ddve_type       = string<br>    ddve_version    = string<br>  }))</pre> | <pre>{<br>  "firstdd": {<br>    "ddve_meta_disks": [<br>      1000,<br>      1000<br>    ],<br>    "ddve_name": "ddve1",<br>    "ddve_type": "16 TB DDVE",<br>    "ddve_version": "8.1.0010.MSDN"<br>  }<br>}</pre> | no |
 | <a name="input_dns_suffix"></a> [dns\_suffix](#input\_dns\_suffix) | the DNS suffig when we create a network with internal dns | `any` | n/a | yes |
 | <a name="input_enable_aks_subnet"></a> [enable\_aks\_subnet](#input\_enable\_aks\_subnet) | If set to true, create subnet for aks | `bool` | `false` | no |
 | <a name="input_enable_tkg_controlplane_subnet"></a> [enable\_tkg\_controlplane\_subnet](#input\_enable\_tkg\_controlplane\_subnet) | If set to true, create subnet for tkg controlplane | `bool` | `false` | no |
@@ -105,7 +103,7 @@ No resources.
 | <a name="input_ppdm_name"></a> [ppdm\_name](#input\_ppdm\_name) | Instances wiull be named envname+ppdmname+instanceid, e.g tfdemo-ppdm1 tfdemo-ppdm2 | `string` | `"ppdm"` | no |
 | <a name="input_ppdm_public_ip"></a> [ppdm\_public\_ip](#input\_ppdm\_public\_ip) | must we assign a public ip to ppdm | `bool` | `false` | no |
 | <a name="input_ppdm_resource_group_name"></a> [ppdm\_resource\_group\_name](#input\_ppdm\_resource\_group\_name) | Bring your own resourcegroup. the Code will read the Data from the resourcegroup name specified here | `string` | `null` | no |
-| <a name="input_ppdm_version"></a> [ppdm\_version](#input\_ppdm\_version) | PPDM Version, can be: '19.16.0','19.15.0', '19.14.0' | `string` | `"19.16.0"` | no |
+| <a name="input_ppdm_version"></a> [ppdm\_version](#input\_ppdm\_version) | PPDM Version, can be: '19.16.0','19.17.0', '19.18.0' | `string` | `"19.18.0"` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Default name of provided RG | `any` | `null` | no |
 | <a name="input_storage_account_cs"></a> [storage\_account\_cs](#input\_storage\_account\_cs) | Storage account when using custom script extension with linux | `string` | `null` | no |
 | <a name="input_storage_account_key_cs"></a> [storage\_account\_key\_cs](#input\_storage\_account\_key\_cs) | Storage account key when using custom script extension with linux | `string` | `null` | no |
@@ -138,7 +136,7 @@ No resources.
 | <a name="output_DDVE_ATOS_STORAGE_ACCOUNT"></a> [DDVE\_ATOS\_STORAGE\_ACCOUNT](#output\_DDVE\_ATOS\_STORAGE\_ACCOUNT) | n/a |
 | <a name="output_DDVE_PASSWORD"></a> [DDVE\_PASSWORD](#output\_DDVE\_PASSWORD) | n/a |
 | <a name="output_DDVE_PRIVATE_IP"></a> [DDVE\_PRIVATE\_IP](#output\_DDVE\_PRIVATE\_IP) | The private ip address for the first DDVE Instance |
-| <a name="output_DDVE_PUBLIC_FQDN"></a> [DDVE\_PUBLIC\_FQDN](#output\_DDVE\_PUBLIC\_FQDN) | we will use the Priovate IP as FQDN if no pubblic is registered, so api calls can work |
+| <a name="output_DDVE_PUBLIC_FQDN"></a> [DDVE\_PUBLIC\_FQDN](#output\_DDVE\_PUBLIC\_FQDN) | we will use the Private IP as FQDN if no public is registered, so api calls can work |
 | <a name="output_DDVE_SSH_PRIVATE_KEY"></a> [DDVE\_SSH\_PRIVATE\_KEY](#output\_DDVE\_SSH\_PRIVATE\_KEY) | The ssh private key for the DDVE Instance |
 | <a name="output_DDVE_SSH_PUBLIC_KEY"></a> [DDVE\_SSH\_PUBLIC\_KEY](#output\_DDVE\_SSH\_PUBLIC\_KEY) | The ssh public key for the DDVE Instance |
 | <a name="output_DEPLOYMENT_DOMAIN"></a> [DEPLOYMENT\_DOMAIN](#output\_DEPLOYMENT\_DOMAIN) | n/a |
@@ -187,6 +185,138 @@ No resources.
 | <a name="output_ppdm_ssh_public_key"></a> [ppdm\_ssh\_public\_key](#output\_ppdm\_ssh\_public\_key) | n/a |
 | <a name="output_vpn_public_ip"></a> [vpn\_public\_ip](#output\_vpn\_public\_ip) | The IP of the VPN Vnet Gateway |
 
+
+## defaults
+
+```hcl
+LINUX_ADMIN_USERNAME = "ubuntu"
+LINUX_DATA_DISKS     = []
+LINUX_HOSTNAME       = "client1"
+LINUX_IMAGE = {
+  "offer": "UbuntuServer",
+  "publisher": "Canonical",
+  "sku": "18.04-LTS",
+  "version": "latest"
+}
+LINUX_PRIVATE_IP        = "10.10.8.12"
+LINUX_VM_SIZE           = "Standard_DS1_v2"
+aks_count               = 0
+aks_private_cluster     = false
+aks_private_dns_zone_id = ""
+aks_subnet = [
+  "10.10.6.0/24"
+]
+ave_count               = 0
+ave_initial_password    = "Change_Me12345_"
+ave_public_ip           = "false"
+ave_resource_group_name = ""
+ave_tcp_inbound_rules_Inet = [
+  "22",
+  "443"
+]
+ave_type    = "0.5 TB AVE"
+ave_version = "19.8.0"
+azure_bastion_subnet = [
+  "10.10.0.224/27"
+]
+azure_environment               = "public"
+client_id                       = ""
+client_secret                   = ""
+common_location                 = ""
+common_resource_group_name      = ""
+create_bastion                  = false
+create_common_rg                = false
+create_crs_s2s_vpn              = false
+create_linux                    = false
+create_networks                 = false
+create_s2s_vpn                  = false
+crs_network_rg_name             = ""
+crs_tunnel1_preshared_key       = ""
+crs_vnet_name                   = ""
+crs_vpn_destination_cidr_blocks = []
+crs_vpn_subnet = [
+  "10.150.1.0/24"
+]
+crs_wan_ip            = ""
+ddve_count            = 0
+ddve_initial_password = "Change_Me12345_"
+ddve_meta_disks = [
+  "1023",
+  "1023"
+]
+ddve_networks_resource_group_name = ""
+ddve_public_ip                    = "false"
+ddve_resource_group_name          = ""
+ddve_tcp_inbound_rules_Inet = [
+  "22",
+  "443"
+]
+ddvelist = {
+  "firstdd": {
+    "ddve_meta_disks": [
+      1000,
+      1000
+    ],
+    "ddve_name": "ddve1",
+    "ddve_type": "16 TB DDVE",
+    "ddve_version": "8.0.010.MSDN"
+  }
+}
+dns_suffix                     = ""
+enable_aks_subnet              = false
+enable_tkg_controlplane_subnet = false
+enable_tkg_workload_subnet     = false
+environment                    = ""
+file_uris_cs                   = ""
+infrastructure_subnet = [
+  "10.10.8.0/26"
+]
+location                                    = ""
+network_rg_name                             = ""
+networks_aks_subnet_id                      = ""
+networks_dns_zone_name                      = ""
+networks_infrastructure_resource_group_name = ""
+networks_infrastructure_subnet_id           = ""
+nve_count                                   = 0
+nve_initial_password                        = "Change_Me12345_"
+nve_public_ip                               = "false"
+nve_resource_group_name                     = ""
+nve_tcp_inbound_rules_Inet = [
+  "22",
+  "443"
+]
+nve_type                 = "SMALL"
+nve_version              = "19.10.0"
+ppdm_count               = 0
+ppdm_initial_password    = "Change_Me12345_"
+ppdm_name                = "ppdm"
+ppdm_public_ip           = false
+ppdm_resource_group_name = ""
+ppdm_version             = "19.18.0"
+resource_group_name      = ""
+storage_account_cs       = ""
+storage_account_key_cs   = ""
+subscription_id          = ""
+tenant_id                = ""
+tkg_controlplane_subnet = [
+  "10.10.2.0/24"
+]
+tkg_workload_subnet = [
+  "10.10.4.0/24"
+]
+tunnel1_preshared_key = ""
+virtual_network_address_space = [
+  "10.10.0.0/16"
+]
+vnet_name                   = ""
+vpn_destination_cidr_blocks = []
+vpn_subnet = [
+  "10.10.12.0/24"
+]
+wan_ip = ""
+```
+
+
 ## usage
 
 
@@ -201,10 +331,20 @@ or [terraform.tfvars.json](./terraform.tfvars.json.example) file
 
 
 # module_ddve
-set ddve_count to desired number in tfvars
+Edit the required DDVE List in terraform.tfvars.json
 
 ```hcl
-"ddve_count":1,
+ddvelist = {
+  "firstdd": {
+    "ddve_meta_disks": [
+      1000,
+      1000
+    ],
+    "ddve_name": "ddve1",
+    "ddve_type": "16 TB DDVE",
+    "ddve_version": "8.0.010.MSDN"
+  }
+}
 ```
 review the deployment
 

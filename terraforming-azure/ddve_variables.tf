@@ -54,7 +54,7 @@ map describing each individual DDVE configuration, must contain correct version 
       ddve_version    = "8.1.0010.MSDN"
     }
 EOT  
-  default = null
+  default = {}
   validation {
     condition = alltrue([
       for ddve in values(var.ddvelist) :

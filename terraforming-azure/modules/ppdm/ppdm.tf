@@ -94,6 +94,7 @@ resource "azurerm_network_interface" "ppdm_nic" {
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = var.public_ip == "true" ? azurerm_public_ip.publicip.0.id : null
+
   }
 }
 resource "azurerm_public_ip" "publicip" {

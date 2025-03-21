@@ -51,7 +51,7 @@ No resources.
 | <a name="input_ddve_source_tags"></a> [ddve\_source\_tags](#input\_ddve\_source\_tags) | Source tags applied to Instance for Firewall Rules | `list(any)` | `[]` | no |
 | <a name="input_ddve_target_tags"></a> [ddve\_target\_tags](#input\_ddve\_target\_tags) | Target tags applied to Instance for Firewall Rules | `list(any)` | `[]` | no |
 | <a name="input_ddve_type"></a> [ddve\_type](#input\_ddve\_type) | DDVE Type, can be: '16 TB DDVE', '32 TB DDVE', '96 TB DDVE', '256 TB DDVE' | `string` | `"16 TB DDVE"` | no |
-| <a name="input_ddve_version"></a> [ddve\_version](#input\_ddve\_version) | DDVE Version, can be: 'LTS2022 7.7.5.50', 'LTS2023 7.10.1.40', 'LTS2024 7.13.1.05','8.1.0.10' | `string` | `"8.1.0.10"` | no |
+| <a name="input_ddve_version"></a> [ddve\_version](#input\_ddve\_version) | DDVE Version, can be: 'LTS2022 7.7.5.50', 'LTS2023 7.10.1.40', 'LTS2024 7.13.1.05','8.3.0.10' | `string` | `"8.3.0.10"` | no |
 | <a name="input_gcp_network"></a> [gcp\_network](#input\_gcp\_network) | GCP Network to be used, change for youn own infra | `string` | `"default"` | no |
 | <a name="input_gcp_project"></a> [gcp\_project](#input\_gcp\_project) | the GCP Project do deploy resources | `any` | `null` | no |
 | <a name="input_gcp_region"></a> [gcp\_region](#input\_gcp\_region) | GCP Region to be used | `string` | `"europe-west3"` | no |
@@ -418,7 +418,7 @@ If branched from here you might only want to update version.
 The versions can be found from the Marketplace default jinja file on GCP , e.g. [DDVE](https://console.cloud.google.com/marketplace/product/dellemc-ddve-public/powerprotect-dd-virtual-edition) :  
  ddve.jinja:
 ```jinja
-      {% if ddveVersion == "8.1.0.10" %}
+      {% if ddveVersion == "8.3.0.10" %}
         {% set ddveImage = "ddve-gcp-8-1-0-10-1127744" %}
       {% elif ddveVersion == "LTS2024 7.13.1.05" %}
         {% set ddveImage = "ddve-gcp-7-13-1-05-1126976" %}
@@ -432,7 +432,7 @@ The versions can be found from the Marketplace default jinja file on GCP , e.g. 
 The code will always be maintained in  ./modules/ddve/ddve.tf:
 ```terraform
   ddve_image = {
-    "8.1.0.10" = {
+    "8.3.0.10" = {
       projectId = "dellemc-ddve-public"
       imageName = "ddve-gcp-8-1-0-10-1127744"
     }    
@@ -454,16 +454,16 @@ And in ./ddve_variables.tf:
 ```terraform
 variable "ddve_version" {
   type        = string
-  default     = "8.1.0.10"
-  description = "DDVE Version, can be: 'LTS2022 7.7.5.50', 'LTS2023 7.10.1.40', 'LTS2024 7.13.1.05','8.1.0.10' " 
+  default     = "8.3.0.10"
+  description = "DDVE Version, can be: 'LTS2022 7.7.5.50', 'LTS2023 7.10.1.40', 'LTS2024 7.13.1.05','8.3.0.10' " 
   validation {
     condition = anytrue([
       var.ddve_version == "LTS2022 7.7.5.50",
       var.ddve_version == "LTS2023 7.10.1.40",
       var.ddve_version == "LTS2024 7.13.1.05",
-      var.ddve_version == "8.1.0.10",
+      var.ddve_version == "8.3.0.10",
     ])
-    error_message = "Must be a valid DDVE Version, can be: 'LTS2022 7.7.5.50', 'LTS2023 7.10.1.40', 'LTS2024 7.13.1.05','8.1.0.10' ."
+    error_message = "Must be a valid DDVE Version, can be: 'LTS2022 7.7.5.50', 'LTS2023 7.10.1.40', 'LTS2024 7.13.1.05','8.3.0.10' ."
   }
 }
 ```

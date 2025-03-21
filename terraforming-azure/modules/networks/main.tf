@@ -56,7 +56,7 @@ resource "azurerm_subnet" "infrastructure_subnet" {
   resource_group_name  = azurerm_resource_group.resource_group.name
   virtual_network_name = azurerm_virtual_network.virtual_network.name
   address_prefixes     = var.infrastructure_subnet
-  service_endpoints    = ["Microsoft.Sql", "Microsoft.Storage"]  
+  service_endpoints    = ["Microsoft.Sql", "Microsoft.Storage"]
 }
 
 resource "azurerm_subnet" "aks_subnet" {
@@ -109,4 +109,6 @@ resource "azurerm_private_dns_zone_virtual_network_link" "env_dns_zone" {
   resource_group_name   = azurerm_resource_group.resource_group.name
   private_dns_zone_name = azurerm_private_dns_zone.env_dns_zone.name
   virtual_network_id    = azurerm_virtual_network.virtual_network.id
+  registration_enabled  = true
+
 }

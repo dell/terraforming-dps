@@ -17,23 +17,29 @@ locals {
     }
   }
   nve_image = {
-    "19.8.0" = {
+    "19.12.0" = {
       publisher = "dellemc"
       offer     = "dell-emc-networker-virtual-edition"
-      sku       = "dell-emc-networker-virtual-edition-198"
-      version   = "19.8.0"
+      sku       = "dell-networker-virtual-edition-19120"
+      version   = "19.12.0"
     }
-    "19.9.2" = {
+    "19.11.0" = {
       publisher = "dellemc"
       offer     = "dell-emc-networker-virtual-edition"
-      sku       = "dell-networker-virtual-edition-19902"
-      version   = "19.9.2"
+      sku       = "dell-networker-virtual-edition-19110"
+      version   = "19.11.0"
     }
     "19.10.0" = {
       publisher = "dellemc"
       offer     = "dell-emc-networker-virtual-edition"
       sku       = "dell-networker-virtual-edition-191001"
       version   = "19.10.0"
+    }
+    "19.9.2" = {
+      publisher = "dellemc"
+      offer     = "dell-emc-networker-virtual-edition"
+      sku       = "dell-networker-virtual-edition-19902"
+      version   = "19.9.2"
     }
   }
   nve_name           = "nve${var.nve_instance}"

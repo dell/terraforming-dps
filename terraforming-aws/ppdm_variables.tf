@@ -8,7 +8,7 @@ variable "ppdm_count" {
 
 variable "PPDM_HOSTNAME" {
   default     = "ppdm_terraform"
-  description = "Hotname of the PPDM Machine"
+  description = "Hostname of the PPDM Machine"
 }
 
 

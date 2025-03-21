@@ -113,7 +113,7 @@ module "common_rg" {
 module "ddve" {
   source                            = "./modules/ddve"
   for_each                          = var.ddvelist
-  ddve_count                        = "${length(var.ddvelist)}"
+  ddve_count                        = length(var.ddvelist)
   depends_on                        = [module.networks, module.common_rg]
   ddve_instance                     = each.value.ddve_name
   ddve_type                         = each.value.ddve_type
